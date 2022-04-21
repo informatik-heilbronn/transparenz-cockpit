@@ -1,0 +1,7 @@
+server:
+  port: 80
+
+  error:
+    path: /error/
+    whitelabel:
+      enabled: false

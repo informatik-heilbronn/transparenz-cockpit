@@ -1,0 +1,31 @@
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="LabSW">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!--Hier alle Klassen Einfügen die Datenbank Objecte sind-->
+        <class>de.hhn.seb.labsw.transparentcockpit.backend.postgres.internal.entity.system.SystemSettingsPql</class>
+
+        <class>de.hhn.seb.labsw.transparentcockpit.backend.postgres.internal.entity.iam.user.UserPql</class>
+        <class>de.hhn.seb.labsw.transparentcockpit.backend.postgres.internal.entity.iam.user.CredentialPql</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <!-- Configuring JDBC properties -->
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <!-- Configuring Connection Pool -->
+            <property name="hibernate.c3p0.min_size" value="5"/>
+            <property name="hibernate.c3p0.max_size" value="20"/>
+            <property name="hibernate.c3p0.timeout" value="1800"/>
+            <property name="hibernate.c3p0.max_statements" value="50"/>
+            <property name="hibernate.c3p0.idle_test_period" value="2000"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>

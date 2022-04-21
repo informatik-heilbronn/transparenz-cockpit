@@ -1,0 +1,6 @@
+rootProject.name = "transparent-cockpit"
+
+
+include("frontend")
+
+include("backend")

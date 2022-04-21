@@ -1,0 +1,125 @@
+import com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer
+
+/**
+ * #################################################################################################################
+ * PLUGINS & PLUGINS CONFIGURATION
+ * #################################################################################################################
+ */
+
+plugins {
+    id 'java'
+
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '5.0.3'
+
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+java {
+    withJavadocJar()
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+application {
+    mainClass.set("de.hhn.seb.labsw.transparentcockpit.Main")
+}
+
+/**
+ * #################################################################################################################
+ * DEPENDENCIES
+ * #################################################################################################################
+ */
+
+dependencies {
+    // Spring
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.2'
+
+    // Morphia
+    implementation 'dev.morphia.morphia:morphia-core:2.2.3'
+
+    // Postgres
+    implementation 'org.postgresql:postgresql:42.3.1'
+    implementation 'org.hibernate:hibernate-core:5.6.3.Final'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.hibernate:hibernate-c3p0:5.6.3.Final'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'ch.qos.logback:logback-classic:1.2.10'
+
+    // Test
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+/**
+ * #################################################################################################################
+ * TASKS
+ * #################################################################################################################
+ */
+
+tasks {
+
+    checkstyle {
+        toolVersion = "9.2"
+        configFile = file('config/checkstyle/google_checks_2021.xml')
+        showViolations = false
+        checkstyleTest.enabled = false
+    }
+
+
+    spotbugs {
+        toolVersion = '4.5.2'
+        ignoreFailures = true
+        showStackTraces = false
+    }
+
+    // Example to configure HTML report
+    spotbugsMain {
+        reports {
+            html {
+                enabled = true
+                destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+                stylesheet = 'fancy-hist.xsl'
+            }
+        }
+    }
+
+    // Example to configure HTML report
+    spotbugsTest {
+        reports {
+            html {
+                enabled = true
+                destination = file("$buildDir/reports/spotbugs/test/spotbugs.html")
+                stylesheet = 'fancy-hist.xsl'
+            }
+        }
+    }
+
+
+    test {
+        useJUnitPlatform()
+    }
+
+
+    shadowJar {
+        archiveFileName = "LabSW.Backend.jar"
+
+        // Required for lage Archives
+        zip64 = true
+
+        // Required for Spring
+        mergeServiceFiles()
+        append 'META-INF/spring.handlers'
+        append 'META-INF/spring.schemas'
+        append 'META-INF/spring.tooling'
+        transform(PropertiesFileTransformer) {
+            paths = ['META-INF/spring.factories']
+            mergeStrategy = "append"
+        }
+    }
+}
