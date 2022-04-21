@@ -1,1 +1,3 @@
 .gradle/
+frontend/.gradle/
+frontend/node_modules/

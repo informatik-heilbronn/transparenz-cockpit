@@ -1,0 +1,45 @@
+.div {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 15px;
+    margin-bottom: 15px;
+    line-height: 15px;
+    /*background-color: #e8e8e8;*/
+    /*background-color: #932a2a;*/
+    border-radius: 10px;
+    font-family: "Quicksand", sans-serif;
+}
+
+.btn {
+    width: 100%;
+    margin-bottom: 15px;
+    line-height: 15px;
+    background-color: #707070;
+    border: none;
+    border-radius: 10px;
+    font-family: "Quicksand", sans-serif;
+    color: white;
+    font-size: large;
+
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding: 12px;
+    box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+
+.icons {
+    color: rgb(255, 255, 255);
+}
+
+
+.label {
+    color: rgb(255, 255, 255);
+}

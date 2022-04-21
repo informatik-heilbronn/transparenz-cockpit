@@ -1,0 +1,92 @@
+
+.divouter {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #E9E9E9;
+    width: 800px;
+    border-radius: 20px 20px 20px 20px;
+    padding-bottom: 50px;
+    padding-top: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: auto;
+    height: 80vh;
+    /*box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;*/
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.7);
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    line-height: 10px;
+  }
+
+
+.divleftA {
+    padding: 20px;
+}
+
+.divleftB {
+    text-align: center;
+    border:1px solid rgba(0, 0, 0, 0.24);
+    width: auto;
+    height: 65vh;
+    padding: 20px;
+}
+
+.divrightA {
+    padding: 20px;
+    padding-top: 60px;
+}
+
+.divrightB {
+    text-align: left;
+    width: 100%;
+    height: 50vh;
+    padding: 20px;
+}
+
+.label {
+    display: inline-block;
+    font-family: "Quicksand", sans-serif;
+    font-weight: lighter;
+    margin-bottom: 20px;
+}
+
+.icon {
+    font-size: small;
+    color: rgb(29, 124, 233);
+}
+
+.ibtn {
+    border: none;
+    margin: 10px;
+    padding: 00px;
+}
+
+.ibtn:hover {
+    opacity: 0.5;
+}
+
+.img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    height: 100px;
+    border-radius:50%;
+    overflow:hidden;
+    background-color: #bbbfc2;
+    border: 1px solid #838383;
+}
+
+.button {
+    background-color: #828282;
+    border: none;
+    border-radius: 20px 20px 20px 20px;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Quicksand", sans-serif;
+    display: inline-block;
+    margin: 10px;
+  }

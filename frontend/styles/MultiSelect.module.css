@@ -1,0 +1,54 @@
+.divs {
+    padding: 10px;
+    display: inline-flex;
+    width: 90%;
+    float: left;
+    /*background-color: #8d0e12;*/
+}
+
+.divsleft {
+    padding: 0px;
+    line-height: 30px;
+    text-align: center;
+    /*background-color: #d70404;*/
+    margin-left: auto;
+}
+.divsright {
+    text-align: center;
+    /*background-color: #693434;*/
+    margin-top: auto;
+    margin-bottom: 5px;
+    width: 69%;
+    font-family: "Quicksand", sans-serif;
+    font-weight: bolder;
+    margin-right: auto;
+}
+
+.divsbuttons {
+    margin-top: 3px;
+
+
+}
+
+.divsInsideCell {
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.inputs {
+    padding: 10px;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    display: inline-block; width: 230px; text-align: right;
+
+}
+
+.buttons {
+    background-color: #b7b7b7;
+    padding: 5px;
+    outline-width: 0px;
+    border-radius: 20px;
+    margin-left: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 6px;
+}

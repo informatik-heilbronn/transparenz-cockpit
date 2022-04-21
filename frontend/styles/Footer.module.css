@@ -1,0 +1,35 @@
+
+.foo {
+
+    /*position: fixed;*/
+    /*position:absolute;*/
+    /*left: 0;*/
+    bottom: 0;
+    display: block;
+    background-color: #313131;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    color: #fafafa;
+    /*overflow: auto;*/
+    /*height: 100px;*/
+    margin-top: 20px;
+
+}
+
+.text {
+    flex: 1 1 200px;
+    font-family: "Quicksand", sans-serif;
+    font-size: 10px;
+    padding: 20px;
+    font-weight: lighter;
+    text-align: left;
+}
+
+.links {
+    display: inline-block;
+    font-family: "Quicksand", sans-serif;
+    text-align: left;
+    text-decoration: none;
+    font-size: 9px;
+    color: white;
+}

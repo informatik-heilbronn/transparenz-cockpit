@@ -1,0 +1,76 @@
+.button{
+    font-family: "Quicksand", sans-serif;
+    background-color: #505050;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #3b3b3b;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.button:active {
+    transform: translateY(2px);
+}
+
+.buttonsIcon {
+    background-color: #b7b7b7;
+    padding: 5px;
+    outline-width: 0px;
+    border-radius: 20px;
+    margin-top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 6px;
+}
+.buttonsIconSmall {
+    background-color: #b7b7b7;
+    padding: 5px;
+    outline-width: 0px;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 6px;
+}
+
+.buttonsIconColl {
+    background-color: #b7b7b7;
+    padding: 5px;
+    outline-width: 0px;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 6px;
+}
+
+.divDyn {
+    display: inline-flex;
+    width: 100%;
+    overflow: hidden;
+
+
+}
+
+.divOut {
+    /*background-color: #1d307c;*/
+    overflow: hidden;
+
+}
+
+.divLine {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    height: 1px;
+    width: 50%;
+    border-radius: 4px;
+    background-color: #000000;
+}
+
+.divBut {
+    /*background-color: #723a3a;*/
+    text-align: center;
+}

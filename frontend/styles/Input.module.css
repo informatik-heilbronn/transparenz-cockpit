@@ -1,0 +1,97 @@
+.divs {
+    padding: 10px;
+    width: 90%;
+    display: inline-flex;
+    float: left;
+    /*background-color: #80109f;*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.divsleft {
+    line-height: 30px;
+    text-align: center;
+    /*background-color: #d70404;*/
+    margin-left: auto;
+}
+.divsright {
+    text-align: center;
+    /*background-color: #693434;*/
+    width: 69%;
+    margin-top: auto;
+    margin-bottom: 5px;
+    margin-right: auto;
+
+
+}
+
+.divsbuttons {
+    margin-top: 3px;
+
+
+}
+
+.divsInsideCell {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: auto;
+    display: inline-flex;
+    /*background-color: #c02a9f;*/
+}
+
+.inputs {
+    padding: 10px;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    display: inline-block; width: 230px; text-align: right;
+    /*background-color: #267256;*/
+
+}
+
+.inputFeld {
+    width: 100%;
+    padding:9px;
+    background-color: #ececec;
+    border-radius: 5px;
+    border-width: 0px;
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 2px 6px;
+    /*word-wrap: break-word;*/
+    /*word-break: break-all;*/
+    font-size: 15px;
+    resize: none;
+    word-break: break-word;
+    font-family: "Quicksand", sans-serif;
+    font-weight: bolder;
+    font-size: 15px;
+    outline-width: 2px;
+    outline-color: black;
+}
+
+.inputFeld:focus {
+    background-color: #ffffff;
+    outline-width: 2px;
+    outline-color: black;
+}
+
+.buttons {
+    background-color: #b7b7b7;
+    border-color: rgba(255, 255, 255, 0.34);
+    padding: 5px;
+    outline-width: 0px;
+    border-radius: 20px;
+    margin-left: 10px;
+    box-shadow: rgba(0, 0, 0, 0.71) 0px 0px 6px;
+}
+.buttonInside {
+    background-color: #b7b7b7;
+    border-color: rgba(255, 255, 255, 0.34);
+    padding: 5px;
+    outline-width: 0px;
+    border-radius: 20px;
+    margin-top: 3px;
+    left: 77%;
+    box-shadow: rgba(0, 0, 0, 0.71) 0px 0px 6px;
+    position: absolute;
+}

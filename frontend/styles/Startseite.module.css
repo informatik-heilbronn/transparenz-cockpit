@@ -1,0 +1,21 @@
+.div {
+    font-family: "Quicksand", sans-serif;
+    font-weight: lighter;
+    align-items: left;
+    margin-left: 40px;
+    height: auto;
+}
+
+.icon {
+    font-size: small;
+    margin-left: 10px;
+}
+
+.icon:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.label{
+    margin-right: 10px;
+}
