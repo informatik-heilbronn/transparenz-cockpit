@@ -1,0 +1,12 @@
+mongo.url=
+mongo.port=
+mongo.database=
+mongo.user=
+mongo.password=
+
+postgres.url=
+postgres.port=
+postgres.database=
+postgres.jdbcSchema=
+postgres.jdbcUser=
+postgres.jdbcPassword=
