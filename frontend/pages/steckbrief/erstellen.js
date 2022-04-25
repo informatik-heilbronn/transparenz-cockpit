@@ -14,6 +14,7 @@ import AccessDenied from '../../components/accessDenied'
 import Swal from 'sweetalert2'
 import ServerError from '../../components/ServerError'
 import  apiData from '../../Api.config.js'
+import * as lodash from 'lodash';
 
 /**
  *
@@ -116,8 +117,8 @@ function HomePage ({ allData }) {
   if (allDataProps[2] === 'error') {
     return <ServerError />
   }
-  const lodashClonedeep = require('lodash.clonedeep')
-  const allDataTmp = lodashClonedeep(allData)
+  //const lodashClonedeep = require('lodash.clonedeep')
+  const allDataTmp = lodash.cloneDeep(allData)
   const [session, loading] = useSession()
   if (typeof window !== 'undefined' && loading) return null
   if (!session) {

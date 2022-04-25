@@ -241,3 +241,5 @@ gradle-app.setting
 # Eclipse
 .settings/
 .project
+
+backend/transparentcockpit.config
