@@ -13,6 +13,7 @@ import AccessDenied from '../../components/accessDenied'
 import Swal from 'sweetalert2'
 import ServerError from '../../components/ServerError'
 import apiData from '../../Api.config.js'
+import * as lodash from 'lodash';
 
 /**
  *
@@ -144,8 +145,8 @@ function HomePage ({ allData, allDataTmp }) {
     return <ServerError />
   }
   const [session, loading] = useSession()
-  const lodashClonedeep = require('lodash.clonedeep')
-  const allDataTemp = lodashClonedeep(allDataTmp)
+  //const lodashClonedeep = require('lodash.clonedeep')
+  const allDataTemp = lodash.cloneDeep(allDataTmp)
   const groups = Object.values(allData.groups)
   const components = {
     SELECT_MULTI_INPUT: MultiSelect,
