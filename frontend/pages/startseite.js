@@ -16,13 +16,13 @@ import MultiInput from '../components/MultiInput'
  * @param context
  * @returns {Promise<{props: {allData: any}}>}
  */
-export async function getStaticProps (context) {
-  const res = await fetch(apiData.OverviewGetApi)
-  const data = await res.json()
-  return {
-    props: { allData: data }
-  }
-}
+   export async function getStaticProps (context) {
+//     //const res = await fetch(apiData.OverviewGetApi)
+//     //const data = await res.json()
+    return {
+      props: {}
+    }
+ }
 
 /**
  *
@@ -31,10 +31,13 @@ export async function getStaticProps (context) {
  * @constructor
  */
 function Startseite ({ allData }) {
-  const allDataProps = Object.getOwnPropertyNames(allData)
-  if (allDataProps[2] === 'error') {
-    return <ServerError />
+  if(allData != undefined){
+    const allDataProps = Object.getOwnPropertyNames(allData)
+    if (allDataProps[2] === 'error') {
+      return <ServerError />
+    }
   }
+
   const [session, loading] = useSession()
   if (typeof window !== 'undefined' && loading) return null
   if (!session) {

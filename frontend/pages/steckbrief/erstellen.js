@@ -99,13 +99,13 @@ export async function getDefaultTemp () { // load default template ID
   return data.templateId.toString()
 }
 
-export async function getStaticProps (context) { // load default template
-  const res = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
-  const data = await res.json()
-  return {
-    props: { allData: data }
-  }
-}
+// export async function getStaticProps (context) { // load default template
+//   const res = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
+//   const data = await res.json()
+//   return {
+//     props: { allData: data }
+//   }
+// }
 
 /**
  *
@@ -113,9 +113,11 @@ export async function getStaticProps (context) { // load default template
  * @constructor
  */
 function HomePage ({ allData }) {
-  const allDataProps = Object.getOwnPropertyNames(allData)
-  if (allDataProps[2] === 'error') {
-    return <ServerError />
+  if(allData != undefined){
+    const allDataProps = Object.getOwnPropertyNames(allData)
+    if (allDataProps[2] === 'error') {
+      return <ServerError />
+    }
   }
   //const lodashClonedeep = require('lodash.clonedeep')
   const allDataTmp = lodash.cloneDeep(allData)

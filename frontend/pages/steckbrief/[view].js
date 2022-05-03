@@ -15,28 +15,33 @@ import ServerError from '../../components/ServerError'
 import apiData from '../../Api.config.js'
 import * as lodash from 'lodash';
 
+
 /**
  *
  * @returns {Promise<{paths: *[], fallback: boolean}>}
  */
-export async function getStaticPaths () {
-  const res = await fetch(apiData.OverviewGetApi)
-  const data = await res.json()
-  const dataProps = Object.getOwnPropertyNames(await data)
-  let paths = []
-  const pathsArr = []
-  dataProps.map((dataIn) => {
-    {
-      paths = data[dataIn].map((dataIn2) => {
-        pathsArr.push({ params: { view: dataIn2.projectNumber.toString() } })
-      })
-    }
-  })
-  return {
-    paths: pathsArr,
-    fallback: false
-  }
+ export async function getStaticPaths () {
+//   const res = await fetch(apiData.OverviewGetApi)
+//   const data = await res.json()
+//   const dataProps = Object.getOwnPropertyNames(await data)
+//   let paths = []
+//   const pathsArr = []
+//   dataProps.map((dataIn) => {
+//     {
+//       paths = data[dataIn].map((dataIn2) => {
+//         pathsArr.push({ params: { view: dataIn2.projectNumber.toString() } })
+//       })
+//     }
+//   })
+//   return {
+//     paths: pathsArr,
+//     fallback: false
+//   }
+return {
+  paths: [], //indicates that no page needs be created at build time
+  fallback: 'blocking' //indicates the type of fallback
 }
+ }
 
 export async function Post (jsonBody, id) {
   const res = await fetch(apiData.ReportUpdateApi + '/' + id, {
