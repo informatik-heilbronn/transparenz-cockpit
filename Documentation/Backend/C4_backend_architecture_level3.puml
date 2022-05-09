@@ -1,0 +1,40 @@
+@startuml Transparent_Backend
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Person(admin, "Administrator")
+
+Container_Ext(frontend, "Frontend Application", "Node.js")
+
+Container_Boundary(backend, "Backend"){
+
+  Component(APIcontroller, "API-Controller", "Spring REST Controller", "Handles incoming REST requests ")
+
+
+  Component(configurator, "Configurationservice", "Spring Bean", "Takes care of loading and distributing the configuration")
+  Component(systemSettings, "Systemsettingsservice", "Spring Bean", "Handles all systemsettings actions (Create, Read, Update)")
+  Component(projektReport, "Reportservice", "Spring Bean", "Handles all reports actions (Create, Read, Update)")
+  
+  
+  ComponentDb(mongo_db, "MongoDB Database", "MongoDB", "Holds reports, templates and reporthistory")
+  ComponentDb(postgre_db, "PostgreSQL Database", "PostgreSQL", "Holds user information and system settings")
+
+
+}
+
+Component_Ext(configFile, "Configuration file", ".config file", "contains configuration information of databases")
+
+Rel(frontend, APIcontroller, "Makes API calls to", "REST, JSON/HTTP")
+
+Rel(APIcontroller, systemSettings, "uses")
+Rel(APIcontroller, projektReport, "uses")
+
+Rel(configurator,configFile, "loads config", "Java FileReader")
+Rel(admin,configFile, "creates/updates", "Texteditor")
+
+Rel(configurator, systemSettings, "delivers config")
+Rel(configurator, projektReport, "delivers config")
+
+Rel(admin,postgre_db, "creates", "SQL")
+Rel(systemSettings, postgre_db, "read/write")
+Rel(projektReport, mongo_db, "read/write")
+@enduml
