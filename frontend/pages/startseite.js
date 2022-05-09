@@ -7,7 +7,7 @@ import AccessDenied from '../components/accessDenied'
 import ServerError from '../components/ServerError'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import apiData from '../Api.config.js'
+//import apiData from '../Api.config.js'
 import SingleInput from '../components/SingleInput'
 import MultiInput from '../components/MultiInput'
 

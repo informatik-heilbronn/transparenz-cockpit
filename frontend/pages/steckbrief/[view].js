@@ -12,7 +12,7 @@ import { signOut, useSession } from 'next-auth/client'
 import AccessDenied from '../../components/accessDenied'
 import Swal from 'sweetalert2'
 import ServerError from '../../components/ServerError'
-import apiData from '../../Api.config.js'
+//import apiData from '../../Api.config.js'
 import * as lodash from 'lodash';
 
 
@@ -44,7 +44,7 @@ return {
  }
 
 export async function Post (jsonBody, id) {
-  const res = await fetch(apiData.ReportUpdateApi + '/' + id, {
+  const res = await fetch(process.env.REPORT_UPDATE_URL + '/' + id, {
     mode: 'cors',
     method: 'POST',
     cache: 'no-cache',
@@ -81,7 +81,7 @@ export async function Post (jsonBody, id) {
 
 export async function getDefaultTemp () { // load default template ID
   let tempId
-  const res = await fetch(apiData.TemplateDefaultGetApi)
+  const res = await fetch(process.env.TEMPLATE_DEFAULT_GET_URL)
   const data = await res.json()
   try {
     tempId = data.templateId.toString()
@@ -98,8 +98,8 @@ export async function getDefaultTemp () { // load default template ID
  */
 export async function getStaticProps (context) {
   const id = await context.params.view
-  const res = await fetch(apiData.ReportGetApi + '/' + id)
-  const res2 = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
+  const res = await fetch(process.env.REPORT_GET_URL + '/' + id)
+  const res2 = await fetch(process.env.TEMPLATE_GET_URL + '/' + await getDefaultTemp())
   const data = await res.json()
   const data2 = await res2.json()
   return {
