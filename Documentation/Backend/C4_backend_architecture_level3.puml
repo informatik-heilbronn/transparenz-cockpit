@@ -1,7 +1,7 @@
 @startuml Transparent_Backend
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Person(admin, "Administrator ")
+Person(admin, "Administrator")
 
 Container_Ext(frontend, "Frontend Application", "Node.js")
 
