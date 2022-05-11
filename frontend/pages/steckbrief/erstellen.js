@@ -100,7 +100,7 @@ export async function getDefaultTemp () { // load default template ID
 }
 
 export async function getServerSideProps (context) { // load default template
-  const res = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
+  const res = await fetch(process.env.TEMPLATE_GET_URL + '/' + await getDefaultTemp())
   const data = await res.json()
   return {
     props: { allData: data }
