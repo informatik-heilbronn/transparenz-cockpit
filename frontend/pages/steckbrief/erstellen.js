@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/client'
 import AccessDenied from '../../components/accessDenied'
 import Swal from 'sweetalert2'
 import ServerError from '../../components/ServerError'
-import  apiData from '../../Api.config.js'
+//import  apiData from '../../Api.config.js'
 import * as lodash from 'lodash';
 
 /**
@@ -59,7 +59,7 @@ const onDelete = async (event) => {
 }
 
 export async function Post (jsonBody) {
-  const res = await fetch(apiData.ReportPostApi, {
+  const res = await fetch(process.env.REPORT_POST_URL, {
     mode: 'cors',
     method: 'POST',
     cache: 'no-cache',
@@ -94,18 +94,18 @@ export async function Post (jsonBody) {
 }
 
 export async function getDefaultTemp () { // load default template ID
-  const res = await fetch(apiData.TemplateDefaultGetApi)
+  const res = await fetch(process.env.TEMPLATE_DEFAULT_GET_URL)
   const data = await res.json()
   return data.templateId.toString()
 }
 
-// export async function getStaticProps (context) { // load default template
-//   const res = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
-//   const data = await res.json()
-//   return {
-//     props: { allData: data }
-//   }
-// }
+export async function getServerSideProps (context) { // load default template
+  const res = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
+  const data = await res.json()
+  return {
+    props: { allData: data }
+  }
+}
 
 /**
  *

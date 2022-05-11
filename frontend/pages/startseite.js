@@ -7,7 +7,7 @@ import AccessDenied from '../components/accessDenied'
 import ServerError from '../components/ServerError'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import apiData from '../Api.config.js'
+//import apiData from '../Api.config.js'
 import SingleInput from '../components/SingleInput'
 import MultiInput from '../components/MultiInput'
 
@@ -16,14 +16,13 @@ import MultiInput from '../components/MultiInput'
  * @param context
  * @returns {Promise<{props: {allData: any}}>}
  */
-   export async function getStaticProps (context) {
-//     //const res = await fetch(apiData.OverviewGetApi)
-//     //const data = await res.json()
-    return {
-      props: {}
-    }
+   export async function getServerSideProps (context) {
+      const res = await fetch(apiData.OverviewGetApi)
+      const data = await res.json()
+      return {
+        props: { allData: data }
+      }
  }
-
 /**
  *
  * @param allData
@@ -31,18 +30,18 @@ import MultiInput from '../components/MultiInput'
  * @constructor
  */
 function Startseite ({ allData }) {
-  if(allData != undefined){
+  
     const allDataProps = Object.getOwnPropertyNames(allData)
-    if (allDataProps[2] === 'error') {
+    if (allDataProps[2] === 'error' || allDataProps == undefined) {
       return <ServerError />
     }
-  }
 
   const [session, loading] = useSession()
-  if (typeof window !== 'undefined' && loading) return null
+  //if (typeof window !== 'undefined' && loading) return null
   if (!session) {
     return <AccessDenied />
   }
+
   return (
     <div className={styles.div}>
       <h1>Übersicht</h1>

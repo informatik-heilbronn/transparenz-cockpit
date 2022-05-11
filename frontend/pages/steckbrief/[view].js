@@ -12,7 +12,7 @@ import { signOut, useSession } from 'next-auth/client'
 import AccessDenied from '../../components/accessDenied'
 import Swal from 'sweetalert2'
 import ServerError from '../../components/ServerError'
-import apiData from '../../Api.config.js'
+//import apiData from '../../Api.config.js'
 import * as lodash from 'lodash';
 
 
@@ -20,7 +20,8 @@ import * as lodash from 'lodash';
  *
  * @returns {Promise<{paths: *[], fallback: boolean}>}
  */
- export async function getStaticPaths () {
+//  export async function getStaticPaths () {
+//    try{
 //   const res = await fetch(apiData.OverviewGetApi)
 //   const data = await res.json()
 //   const dataProps = Object.getOwnPropertyNames(await data)
@@ -33,18 +34,27 @@ import * as lodash from 'lodash';
 //       })
 //     }
 //   })
+//   console.log(pathsArr);
 //   return {
 //     paths: pathsArr,
 //     fallback: false
 //   }
-return {
-  paths: [], //indicates that no page needs be created at build time
-  fallback: 'blocking' //indicates the type of fallback
-}
- }
+
+
+//    } catch(e){
+//      console.log(e);
+//     return {
+//       paths: [], //indicates that no page needs be created at build time
+//       fallback: 'blocking' //indicates the type of fallback
+//     }
+
+//    }
+
+
+//  }
 
 export async function Post (jsonBody, id) {
-  const res = await fetch(apiData.ReportUpdateApi + '/' + id, {
+  const res = await fetch(process.env.REPORT_UPDATE_URL + '/' + id, {
     mode: 'cors',
     method: 'POST',
     cache: 'no-cache',
@@ -81,7 +91,7 @@ export async function Post (jsonBody, id) {
 
 export async function getDefaultTemp () { // load default template ID
   let tempId
-  const res = await fetch(apiData.TemplateDefaultGetApi)
+  const res = await fetch(process.env.TEMPLATE_DEFAULT_GET_URL)
   const data = await res.json()
   try {
     tempId = data.templateId.toString()
@@ -96,10 +106,10 @@ export async function getDefaultTemp () { // load default template ID
  * @param context
  * @returns {Promise<{props: {allData: any}}>}
  */
-export async function getStaticProps (context) {
+export async function getServerSideProps (context) {
   const id = await context.params.view
-  const res = await fetch(apiData.ReportGetApi + '/' + id)
-  const res2 = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
+  const res = await fetch(process.env.REPORT_GET_URL + '/' + id)
+  const res2 = await fetch(process.env.TEMPLATE_GET_URL + '/' + await getDefaultTemp())
   const data = await res.json()
   const data2 = await res2.json()
   return {
