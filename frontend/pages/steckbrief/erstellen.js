@@ -99,13 +99,13 @@ export async function getDefaultTemp () { // load default template ID
   return data.templateId.toString()
 }
 
-// export async function getStaticProps (context) { // load default template
-//   const res = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
-//   const data = await res.json()
-//   return {
-//     props: { allData: data }
-//   }
-// }
+export async function getServerSideProps (context) { // load default template
+  const res = await fetch(apiData.TemplateGetApi + '/' + await getDefaultTemp())
+  const data = await res.json()
+  return {
+    props: { allData: data }
+  }
+}
 
 /**
  *
