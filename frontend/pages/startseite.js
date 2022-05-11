@@ -17,7 +17,7 @@ import MultiInput from '../components/MultiInput'
  * @returns {Promise<{props: {allData: any}}>}
  */
    export async function getServerSideProps (context) {
-      const res = await fetch(apiData.OverviewGetApi)
+      const res = await fetch(process.env.OVERVIEW_GET_URL)
       const data = await res.json()
       return {
         props: { allData: data }
