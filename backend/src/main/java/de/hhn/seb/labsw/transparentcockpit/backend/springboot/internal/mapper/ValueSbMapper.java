@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 public class ValueSbMapper {
 
 
-    static Object castValue(DataType dataType, Object object) {
+    public static Object castValue(DataType dataType, Object object) {
         if (object == null) {
             return null;
         }
