@@ -25,8 +25,8 @@ import java.util.Random;
 public class ReportApiController {
 
 
-    private final ProjectReportService projectReportService;
-    private final ProjectReportTemplateService projectReportTemplateService;
+    protected final ProjectReportService projectReportService;
+    protected final ProjectReportTemplateService projectReportTemplateService;
 
 
     public ReportApiController(@Autowired ProjectReportService projectReportService,

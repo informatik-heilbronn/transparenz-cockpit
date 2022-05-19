@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OverviewReportApiController {
 
 
-  private final ProjectReportService projectReportService;
+  protected final ProjectReportService projectReportService;
 
 
   public OverviewReportApiController(@Autowired ProjectReportService projectReportService) {
