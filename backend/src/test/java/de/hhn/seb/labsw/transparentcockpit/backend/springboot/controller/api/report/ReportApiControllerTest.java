@@ -81,7 +81,6 @@ public class ReportApiControllerTest {
         assertEquals(resultProjectReport.getProjectName(), INPUT_TEST_NAME_STRING);
     }
 
-    @Test
     ProjectReport setupInputProjectReport() {
         ProjectReport projectReport = new ProjectReport(UUID.randomUUID());
 
