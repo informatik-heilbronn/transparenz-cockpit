@@ -71,7 +71,7 @@ public class ReportApiControllerTest {
         var result = underTest.getReport(INPUT_TEST_ID_STRING);
 
         //Evaluate
-        assertEquals(stringCaptor.getValue(), "testID");
+        assertEquals(stringCaptor.getValue(), INPUT_TEST_ID_STRING);
         assertEquals(result.getStatusCode(), HttpStatus.OK);
         assertEquals(result.getStatusCodeValue(), 200);
 
@@ -81,7 +81,6 @@ public class ReportApiControllerTest {
         assertEquals(resultProjectReport.getProjectName(), INPUT_TEST_NAME_STRING);
     }
 
-    @Test
     ProjectReport setupInputProjectReport() {
         ProjectReport projectReport = new ProjectReport(UUID.randomUUID());
 
