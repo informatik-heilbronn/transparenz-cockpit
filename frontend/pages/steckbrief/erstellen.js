@@ -113,12 +113,10 @@ export async function getServerSideProps (context) { // load default template
  * @constructor
  */
 function HomePage ({ allData }) {
-  if(allData != undefined){
     const allDataProps = Object.getOwnPropertyNames(allData)
     if (allDataProps[2] === 'error') {
       return <ServerError />
     }
-  }
   //const lodashClonedeep = require('lodash.clonedeep')
   const allDataTmp = lodash.cloneDeep(allData)
   const [session, loading] = useSession()

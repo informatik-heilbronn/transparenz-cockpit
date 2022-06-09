@@ -32,12 +32,12 @@ import MultiInput from '../components/MultiInput'
 function Startseite ({ allData }) {
   
     const allDataProps = Object.getOwnPropertyNames(allData)
-    if (allDataProps[2] === 'error' || allDataProps == undefined) {
+    if (allDataProps[2] === 'error') {
       return <ServerError />
     }
 
   const [session, loading] = useSession()
-  //if (typeof window !== 'undefined' && loading) return null
+  if (typeof window !== 'undefined' && loading) return null
   if (!session) {
     return <AccessDenied />
   }
