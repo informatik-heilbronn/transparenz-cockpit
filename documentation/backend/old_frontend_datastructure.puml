@@ -10,25 +10,40 @@ abstract Class BaseInput{
 - inputType: InputType
 - modifiers: Set<InputModifier>
 }
+Class SingleInputTemplate{
+}
+Class SelectSingleInputTemplate{
+- allowedValues: List<Object>
+}
+Class MultiInputTemplate{
+}
+Class SelectMultiInputTemplate{
+- allowedValues: List<Object>
+}
+
 Class SingleInput{
-- values: List<Object>
+- value: Object
 }
 Class SelectSingleInput{
-- values: List<Object>
-- allowedValues: List<Object>
+- value: Object
 }
 Class MultiInput{
 - values: List<Object>
 }
 Class SelectMultiInput{
 - values: List<Object>
-- allowedValues: List<Object>
 }
 
-BaseInput <|-- SingleInput
-BaseInput <|-- SelectSingleInput
-BaseInput <|-- MultiInput
-BaseInput <|-- SelectMultiInput
+
+BaseInput <|-- SingleInputTemplate
+BaseInput <|-- SelectSingleInputTemplate
+BaseInput <|-- MultiInputTemplate
+BaseInput <|-- SelectMultiInputTemplate
+
+SingleInputTemplate <|-- SingleInput
+SelectSingleInputTemplate <|-- SelectSingleInput
+MultiInputTemplate <|-- MultiInput
+SelectMultiInputTemplate <|-- SelectMultiInput
 
 ProjectReport "1" -- "1..*" Group
 Group "1" -- "0..*" BaseInput
