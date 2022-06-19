@@ -26,46 +26,12 @@ This project is divided into two part the **frontend** and the **backend**.
 gradle build
 ```
 
-### Build Frontend
+### [Build Frontend](documentation/frontend/frontend_setup.md)
 
-```shell
-gradle frontend:build
-```
+### [Build Backend](documentation/backend/backend_build_run.md)
 
-#### Technologies
 
-A list of technologies used within the project:
-* Next.js(https://nextjs.org)
-* MongoDB(https://www.mongodb.com)
 
-#### Installation - Frontend
-
-To run the web UI locally navigate to the frontend folder and run **npm install** followed by **npm run dev**.
-
-### Build Backend
-
-```shell
-gradle backend:build
-```
-
-### Prerequisites
-
-- Docker & Docker-Compose Install (Docker Desktop)
-- Java 11 or newer
-
-#### Requirements
-
-To Start
-
-```shell
-docker-compose up -d
-```
-
-To Stop
-
-```shell
-docker-compose down
-```
 
 #### Test
 
