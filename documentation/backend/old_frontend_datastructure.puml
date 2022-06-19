@@ -1,24 +1,28 @@
 @startuml Transparent_old_datastructure
-Class ProjectReportTemplate{
-- groups: Map<String, Group>     
+Class ProjectReport{
+- groups: Map<String, Group>
 }
 Class Group{
-- fields: Map<String, BaseInput>     
+- fields: Map<String, BaseInput>
 }
 abstract Class BaseInput{
-- type: Datatype     
+- type: Datatype
 - inputType: InputType
 - modifiers: Set<InputModifier>
 }
-Class SingleInput{     
+Class SingleInput{
+- values: List<Object>
 }
 Class SelectSingleInput{
+- values: List<Object>
 - allowedValues: List<Object>
 }
-Class MultiInput{    
+Class MultiInput{
+- values: List<Object>
 }
 Class SelectMultiInput{
-- allowedValues: List<Object>     
+- values: List<Object>
+- allowedValues: List<Object>
 }
 
 BaseInput <|-- SingleInput
@@ -26,6 +30,6 @@ BaseInput <|-- SelectSingleInput
 BaseInput <|-- MultiInput
 BaseInput <|-- SelectMultiInput
 
-ProjectReportTemplate "1" -- "1..*" Group
+ProjectReport "1" -- "1..*" Group
 Group "1" -- "0..*" BaseInput
 @enduml
