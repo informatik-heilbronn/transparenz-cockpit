@@ -1,0 +1,35 @@
+@startuml Transparent_new_datastructure
+
+skinparam linetype ortho
+skinparam nodesep 450
+skinparam ranksep 45
+
+Class ProjectReportTemplate{
+- reportName: InputTemplate
+- reportID: InputTemplate
+- reportGroup: InputTemplate
+- sections: Map<String, Section>
+}
+Class Section{
+- fields: Map<String, BaseInput>
+}
+abstract Class BaseInput{
+- type: Datatype
+- inputType: InputType
+- isRequired: boolean
+}
+Class InputTemplate{
+allowedValues: List<Object>
+}
+Class Input{
+- values: List<Object>
+}
+ProjectReportTemplate "1" -- "1..*" InputTemplate
+
+BaseInput <|-- InputTemplate
+InputTemplate <|-- Input
+
+ProjectReportTemplate "1" -- "1..*" Section
+
+Section "1" -- "0..*" BaseInput
+@enduml
