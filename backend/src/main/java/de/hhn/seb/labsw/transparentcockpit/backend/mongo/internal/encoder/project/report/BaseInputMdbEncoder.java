@@ -16,7 +16,7 @@ public class BaseInputMdbEncoder {
     public static BaseInputMdb encode(BaseInputMdb baseInputMdb) {
         BaseInputMdb encodedBaseInputMdb = new BaseInputMdb(
                 Base64Encoder.encode(baseInputMdb.getNumber()), Base64Encoder.encode(baseInputMdb.getName()),
-                baseInputMdb.getInputType(), baseInputMdb.getModifiers(),
+                baseInputMdb.getInputType(), baseInputMdb.getIsRequired(),
                 baseInputMdb.getType(), Collections.emptyList(), Collections.emptyList());
 
         List<Object> allowedValues = new ArrayList<>();
@@ -41,7 +41,7 @@ public class BaseInputMdbEncoder {
     public static BaseInputMdb decode(BaseInputMdb baseInputMdb) {
         BaseInputMdb decodeBaseInputMdb = new BaseInputMdb(
                 Base64Encoder.decode(baseInputMdb.getNumber()), Base64Encoder.decode(baseInputMdb.getName()),
-                baseInputMdb.getInputType(), baseInputMdb.getModifiers(),
+                baseInputMdb.getInputType(), baseInputMdb.getIsRequired(),
                 baseInputMdb.getType(), Collections.emptyList(), Collections.emptyList());
 
         List<Object> allowedValues = new ArrayList<>();

@@ -29,7 +29,7 @@ public class BaseInputTemplateMdb {
 
     // Attribute
     private InputType inputType;
-    private List<InputModifier> modifiers = new ArrayList<>();
+    private boolean isRequired;
 
     // Content
     private DataType type;
@@ -41,20 +41,20 @@ public class BaseInputTemplateMdb {
     }
 
     public BaseInputTemplateMdb(String number, String name,
-                                InputType inputType, List<InputModifier> modifiers,
+                                InputType inputType, boolean isRequired,
                                 DataType type, List<Object> allowedValues) {
-        this(UUID.randomUUID().toString(), number, name, inputType, modifiers, type, allowedValues);
+        this(UUID.randomUUID().toString(), number, name, inputType, isRequired, type, allowedValues);
     }
 
     public BaseInputTemplateMdb(String id,
                                 String number, String name,
-                                InputType inputType, List<InputModifier> modifiers,
+                                InputType inputType, boolean isRequired,
                                 DataType type, List<Object> allowedValues) {
         this.id = id;
         this.number = number;
         this.name = name;
         this.inputType = inputType;
-        this.modifiers = modifiers;
+        this.isRequired = isRequired;
         this.type = type;
         this.allowedValues = allowedValues;
     }
@@ -92,12 +92,12 @@ public class BaseInputTemplateMdb {
         this.inputType = inputType;
     }
 
-    public List<InputModifier> getModifiers() {
-        return modifiers;
+    public boolean getIsRequired() {
+        return isRequired;
     }
 
-    public void setModifiers(List<InputModifier> modifiers) {
-        this.modifiers = modifiers;
+    public void setIsRequired(boolean modifiers) {
+        this.isRequired = isRequired;
     }
 
     public DataType getType() {

@@ -1,5 +1,7 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -17,11 +19,11 @@ public abstract class BaseInput {
     protected final String name;
 
     // Attribute
-    protected final Set<InputModifier> modifiers;
+    protected final InputType inputType;
+    protected final boolean isRequired;
 
     // Content
     protected final DataType type;
-    protected final InputType inputType;
 
 
     /**
@@ -29,17 +31,17 @@ public abstract class BaseInput {
      *
      * @param number    Number of the Input
      * @param name      Name of the Input
-     * @param modifiers Modifiers of the Input
+     * @param isRequired Modifiers of the Input
      * @param type      Type of the Input
      * @param inputType InputType
      */
     public BaseInput(String number, String name,
-                     Set<InputModifier> modifiers,
+                     boolean isRequired,
                      DataType type, InputType inputType) {
 
         this.number = number;
         this.name = name;
-        this.modifiers = modifiers;
+        this.isRequired = isRequired;
         this.type = type;
         this.inputType = inputType;
     }
@@ -52,8 +54,8 @@ public abstract class BaseInput {
         return name;
     }
 
-    public Set<InputModifier> getModifiers() {
-        return modifiers;
+    public boolean getIsRequired() {
+        return isRequired;
     }
 
     public DataType getType() {

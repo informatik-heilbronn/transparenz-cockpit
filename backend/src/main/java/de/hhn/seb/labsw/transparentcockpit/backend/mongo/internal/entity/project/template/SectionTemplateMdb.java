@@ -11,7 +11,7 @@ import java.util.UUID;
  * GroupTemplate Mongo Object.
  */
 @Entity
-public class GroupTemplateMdb {
+public class SectionTemplateMdb {
 
 
     // internal Identifier
@@ -29,10 +29,10 @@ public class GroupTemplateMdb {
 
 
     // Morphia
-    public GroupTemplateMdb() {
+    public SectionTemplateMdb() {
     }
 
-    public GroupTemplateMdb(String letter, String name) {
+    public SectionTemplateMdb(String letter, String name) {
         this.id = UUID.randomUUID().toString();
 
         this.letter = letter;

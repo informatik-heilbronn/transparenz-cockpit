@@ -7,6 +7,7 @@ import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.Inp
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.util.ValidationUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -15,49 +16,45 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Project Report InputTemplate of Type SelectSingleInputTemplate.
- * SelectSingleInput:
- * - List of Allowed Values
+ * Project Report InputTemplate of Type SingleInputTemplate.
+ * SingleInput:
  * - Single Input Value
  */
-public class SelectSingleInputTemplate extends BaseInput {
+public class InputTemplate extends BaseInput {
 
-    protected List<Object> allowedValues;
-
+    private List<Object> allowedValues = new ArrayList<>();
 
     /**
      * Constructor.
      *
-     * @param number        Number of the Input
-     * @param name          Name of the Input
-     * @param modifiers     Modifiers of the Input
-     * @param type          Type of the Input
-     * @param allowedValues Allowed Values of the SelectSingleInputTemplate
+     * @param number    Number of the Input
+     * @param name      Name of the Input
+     * @param isRequired Is Input required
+     * @param type      Type of the Input
      * @throws ValueException If something is wrong with the Value
      */
-    public SelectSingleInputTemplate(String number, String name,
-                                     Set<InputModifier> modifiers,
-                                     DataType type, List<Object> allowedValues) {
-        super(number, name, modifiers, type, InputType.SELECT_SINGLE_INPUT);
-
-        this.allowedValues = allowedValues;
-
-        ValidationUtil.validateModifier(this.getClass().getName(), modifiers, InputModifier.REQUIRED,
-                InputModifier.PROJECT_GROUP);
-        ValidationUtil.validateValues(modifiers, allowedValues);
-
+    public InputTemplate(String number, String name,
+                         boolean isRequired,
+                         DataType type, InputType inputType) throws ValueException {
+        super(number, name, isRequired, type, inputType);
+        this.allowedValues =  new ArrayList<>();
     }
+
+    public InputTemplate(String number, String name,
+                         boolean isRequired,
+                         DataType type, InputType inputType, List<Object> allowedValues) throws ValueException {
+        super(number, name, isRequired, type, inputType);
+        this.allowedValues =  allowedValues;
+    }
+
 
     public void addAllowedValue(Object... allowedValues) {
 
         this.allowedValues.addAll(Arrays.asList(allowedValues));
-
-        ValidationUtil.validateValues(modifiers, this.allowedValues);
     }
 
     public List<Object> getAllowedValues() {
 
         return allowedValues;
     }
-
 }

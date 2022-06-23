@@ -1,6 +1,8 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.report;
 
-import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.base.group.GroupMdb;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.Input;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.InputTemplate;
+import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.base.group.SectionMdb;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 
@@ -25,7 +27,10 @@ public class ProjectReportMdb {
     private String templateId;
 
     // Content
-    private Map<String, GroupMdb> groups = new HashMap<>();
+    private Input reportName;
+    private Input reportID;
+    private Input reportGroup;
+    private Map<String, SectionMdb> sections = new HashMap<>();
 
 
     // Morphia
@@ -38,11 +43,11 @@ public class ProjectReportMdb {
 
     public ProjectReportMdb(String projectReportId,
                             String projectNumber, String templateId,
-                            Map<String, GroupMdb> groups) {
+                            Map<String, SectionMdb> sections) {
         this.projectReportId = projectReportId;
         this.projectNumber = projectNumber;
         this.templateId = templateId;
-        this.groups = groups;
+        this.sections = sections;
     }
 
 
@@ -70,15 +75,39 @@ public class ProjectReportMdb {
         this.templateId = templateId;
     }
 
-    public Map<String, GroupMdb> getGroups() {
-        return groups;
+    public Map<String, SectionMdb> getSections() {
+        return sections;
     }
 
-    public void setGroups(Map<String, GroupMdb> groups) {
-        this.groups = groups;
+    public void setSections(Map<String, SectionMdb> sections) {
+        this.sections = sections;
     }
 
-    public void addGroup(String groupLetter, GroupMdb groupMdb) {
-        this.groups.put(groupLetter, groupMdb);
+    public void addGroup(String groupLetter, SectionMdb sectionMdb) {
+        this.sections.put(groupLetter, sectionMdb);
+    }
+
+    public Input getReportName() {
+        return reportName;
+    }
+
+    public void setReportName(Input reportName) {
+        this.reportName = reportName;
+    }
+
+    public Input getReportID() {
+        return reportID;
+    }
+
+    public void setReportID(Input reportID) {
+        this.reportID = reportID;
+    }
+
+    public Input getReportGroup() {
+        return reportGroup;
+    }
+
+    public void setReportGroup(Input reportGroup) {
+        this.reportGroup = reportGroup;
     }
 }

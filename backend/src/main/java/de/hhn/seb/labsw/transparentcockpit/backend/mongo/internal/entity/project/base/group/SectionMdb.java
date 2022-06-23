@@ -12,7 +12,7 @@ import java.util.UUID;
  * Group Mongo Object.
  */
 @Entity
-public class GroupMdb {
+public class SectionMdb {
 
 
     // internal Identifier
@@ -30,14 +30,14 @@ public class GroupMdb {
 
 
     // Morphia
-    public GroupMdb() {
+    public SectionMdb() {
     }
 
-    public GroupMdb(String letter, String name) {
+    public SectionMdb(String letter, String name) {
         this(UUID.randomUUID().toString(), letter, name, new HashMap<>());
     }
 
-    public GroupMdb(String id, String letter, String name, Map<String, BaseInputMdb> fields) {
+    public SectionMdb(String id, String letter, String name, Map<String, BaseInputMdb> fields) {
         this.id = id;
         this.letter = letter;
         this.name = name;

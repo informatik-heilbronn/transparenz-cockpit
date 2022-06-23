@@ -1,106 +1,99 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.models.project.report;
 
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Group;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.BaseInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SelectSingleInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SingleInput;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Section;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.DataType;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.Input;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.ProjectReportTemplate;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 /**
  * Project Report.
  */
 public class ProjectReport {
-  // Attribute
-  private final UUID templateId;
+    // Attribute
+    private final UUID templateId;
 
-  // Content
-  private final Map<String, Group> groups;
+    // Content
+    private final Input reportName;
+    private final Input reportID;
+    private final Input reportGroup;
+    private final Map<String, Section> sections;
+
+    /**
+     * Constructor.
+     *
+     * @param templateId    templateId TemplateId which the Report is base on
+     * @param reportID
+     * @param reportName
+     * @param reportGroup
+     */
+    public ProjectReport(UUID templateId, Input reportID, Input reportName, Input reportGroup) {
+        this.templateId = templateId;
+        this.reportID = reportID;
+        this.reportName = reportName;
+        this.reportGroup = reportGroup;
+        this.sections = new TreeMap<>();
+    }
+
+    public UUID getTemplateId() {
+        return templateId;
+    }
+
+    public String getProjectNumber() {
+        return getReportID().getValues().get(0).toString();
+    }
 
 
-  /**
-   * Constructor.
-   *
-   * @param templateId TemplateId which the Report is base on
-   */
-  public ProjectReport(UUID templateId) {
-    this.templateId = templateId;
-    this.groups = new TreeMap<>();
-  }
+    public String getName() {
+        return getReportName().getValues().get(0).toString();
+    }
 
-  public UUID getTemplateId() {
-    return templateId;
-  }
+    public String getGroup(){
+        return getReportGroup().getValues().get(0).toString();
+    }
 
-  public String getProjectNumber() throws IllegalArgumentException {
-    for (Group group : groups.values()) {
-      for (BaseInput inputTemplate : group.getFields().values()) {
-        if (inputTemplate.getModifiers().contains(InputModifier.PROJECT_ID)) {
-          return ((SingleInput) inputTemplate).getValue().toString();
+    public void addSection(Section section) throws IllegalArgumentException {
+        if (this.sections.containsKey(section.getLetter())) {
+            throw new IllegalArgumentException("GroupLetter is already in use");
         }
-      }
+        this.sections.put(section.getLetter(), section);
     }
-    throw new IllegalArgumentException("No ProjectReport Number found");
-  }
+
+    public Map<String, Section> getSections() {
+        return sections;
+    }
 
 
-  public String getName() throws IllegalArgumentException {
-    for (Group group : groups.values()) {
-      for (BaseInput inputTemplate : group.getFields().values()) {
-        if (inputTemplate.getModifiers().contains(InputModifier.PROJECT_NAME)) {
-          return ((SingleInput) inputTemplate).getValue().toString();
+    /**
+     * Validates the whole ProjectReport against the given Template.
+     *
+     * @param projectReportTemplate Template which the ProjectReport is Validated against
+     */
+    public void validateReport(ProjectReportTemplate projectReportTemplate) {
+        if (!templateId.equals(projectReportTemplate.getTemplateId())) {
+            throw new IllegalArgumentException("TemplateReport and Report dont match."
+                    + "\n Gotten TemplateID " + projectReportTemplate.getTemplateId() + " but expected " + this.getTemplateId());
         }
-      }
+        projectReportTemplate.getSections().forEach((groupKey, group) -> {
+            if (!sections.containsKey(groupKey)) {
+                throw new IllegalArgumentException("TemplateReport:Group and Report:Group dont match."
+                        + "\n Gotten Letter " + groupKey + " but does not exists");
+            }
+            sections.get(groupKey).validateGroup(group);
+        });
     }
-    throw new IllegalArgumentException("No ProjectReport Name found");
-  }
 
-  public String getGroup() throws IllegalArgumentException {
-    for (Group group : groups.values()) {
-      for (BaseInput inputTemplate : group.getFields().values()) {
-        if (inputTemplate.getModifiers().contains(InputModifier.PROJECT_GROUP)) {
-          if (inputTemplate instanceof SingleInput) {
-            return ((SingleInput) inputTemplate).getValue().toString();
-          } else if (inputTemplate instanceof SelectSingleInput) {
-            return ((SelectSingleInput) inputTemplate).getValue().toString();
-          }
-        }
-      }
+    public Input getReportName() {
+        return reportName;
     }
-    throw new IllegalArgumentException("No ProjectReport Group found");
-  }
-  public void addGroup(Group group) throws IllegalArgumentException {
-    if (groups.containsKey(group.getLetter())) {
-      throw new IllegalArgumentException("GroupLetter is already in use");
-    }
-    groups.put(group.getLetter(), group);
-  }
-  public Map<String, Group> getGroups() {
-    return groups;
-  }
 
-
-  /**
-   * Validates the whole ProjectReport against the given Template.
-   *
-   * @param projectReportTemplate Template which the ProjectReport is Validated against
-   */
-  public void validateReport(ProjectReportTemplate projectReportTemplate) {
-    if (!templateId.equals(projectReportTemplate.getTemplateId())) {
-      throw new IllegalArgumentException("TemplateReport and Report dont match."
-          + "\n Gotten TemplateID " + projectReportTemplate.getTemplateId() + " but expected " + this.getTemplateId());
+    public Input getReportID() {
+        return reportID;
     }
-    projectReportTemplate.getGroups().forEach((groupKey, group) -> {
-      if (!groups.containsKey(groupKey)) {
-        throw new IllegalArgumentException("TemplateReport:Group and Report:Group dont match."
-            + "\n Gotten Letter " + groupKey + " but does not exists");
-      }
-      groups.get(groupKey).validateGroup(group);
-    });
-  }
+
+    public Input getReportGroup() {
+        return reportGroup;
+    }
 }

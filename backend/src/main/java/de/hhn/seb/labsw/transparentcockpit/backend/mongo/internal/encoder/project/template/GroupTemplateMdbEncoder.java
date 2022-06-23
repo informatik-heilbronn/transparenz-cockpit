@@ -2,7 +2,7 @@ package de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.encoder.proje
 
 import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.encoder.Base64Encoder;
 import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template.BaseInputTemplateMdb;
-import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template.GroupTemplateMdb;
+import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template.SectionTemplateMdb;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,12 +12,12 @@ import java.util.Map;
  */
 public class GroupTemplateMdbEncoder {
 
-    public static GroupTemplateMdb encode(GroupTemplateMdb groupTemplateMdb) {
-        GroupTemplateMdb encodedGroupMdb = new GroupTemplateMdb(
-                Base64Encoder.encode(groupTemplateMdb.getLetter()), Base64Encoder.encode(groupTemplateMdb.getName()));
+    public static SectionTemplateMdb encode(SectionTemplateMdb sectionTemplateMdb) {
+        SectionTemplateMdb encodedGroupMdb = new SectionTemplateMdb(
+                Base64Encoder.encode(sectionTemplateMdb.getLetter()), Base64Encoder.encode(sectionTemplateMdb.getName()));
 
         Map<String, BaseInputTemplateMdb> fields = new HashMap<>();
-        for (Map.Entry<String, BaseInputTemplateMdb> entry : groupTemplateMdb.getFields().entrySet()) {
+        for (Map.Entry<String, BaseInputTemplateMdb> entry : sectionTemplateMdb.getFields().entrySet()) {
             fields.put(Base64Encoder.encode(entry.getKey()), BaseInputTemplateMdbEncoder.encode(entry.getValue()));
         }
         encodedGroupMdb.setFields(fields);
@@ -25,12 +25,12 @@ public class GroupTemplateMdbEncoder {
         return encodedGroupMdb;
     }
 
-    public static GroupTemplateMdb decode(GroupTemplateMdb groupTemplateMdb) {
-        GroupTemplateMdb decodedGroupMdb = new GroupTemplateMdb(
-                Base64Encoder.decode(groupTemplateMdb.getLetter()), Base64Encoder.decode(groupTemplateMdb.getName()));
+    public static SectionTemplateMdb decode(SectionTemplateMdb sectionTemplateMdb) {
+        SectionTemplateMdb decodedGroupMdb = new SectionTemplateMdb(
+                Base64Encoder.decode(sectionTemplateMdb.getLetter()), Base64Encoder.decode(sectionTemplateMdb.getName()));
 
         Map<String, BaseInputTemplateMdb> fields = new HashMap<>();
-        for (Map.Entry<String, BaseInputTemplateMdb> entry : groupTemplateMdb.getFields().entrySet()) {
+        for (Map.Entry<String, BaseInputTemplateMdb> entry : sectionTemplateMdb.getFields().entrySet()) {
             fields.put(Base64Encoder.decode(entry.getKey()), BaseInputTemplateMdbEncoder.decode(entry.getValue()));
         }
         decodedGroupMdb.setFields(fields);

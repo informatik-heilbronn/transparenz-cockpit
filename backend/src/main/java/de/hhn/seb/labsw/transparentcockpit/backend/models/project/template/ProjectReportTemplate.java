@@ -1,13 +1,11 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.models.project.template;
 
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Group;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.BaseInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Section;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.DataType;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.InputTemplate;
+
+import java.util.*;
 
 /**
  * Project Report Template.
@@ -18,33 +16,65 @@ public class ProjectReportTemplate {
   private final UUID templateId;
 
   // Content
-  private final Map<String, Group> groups;
+  private final InputTemplate reportName;
+  private final InputTemplate reportID;
+  private final InputTemplate reportGroup;
+  private final Map<String, Section> sections;
 
 
   /**
    * Constructor.
    *
-   * @param templateId TemplateId
+   * @param templateId
+   * @param reportID
+   * @param reportName
+   * @param reportGroup
+   */
+  public ProjectReportTemplate(UUID templateId, InputTemplate reportID, InputTemplate reportName, InputTemplate reportGroup) {
+    this.templateId = templateId;
+    this.reportID = reportID;
+    this.reportName = reportName;
+    this.reportGroup = reportGroup;
+    this.sections = new TreeMap<>();
+  }
+
+  /**
+   * Constructor.
+   *
+   * @param templateId TemplateId which the Report is base on
    */
   public ProjectReportTemplate(UUID templateId) {
     this.templateId = templateId;
-    this.groups = new TreeMap<>();
+
+    this.reportID = new InputTemplate("6.", "Vorhabennummer", true,
+            DataType.STRING, InputType.SINGLE_INPUT);
+
+    this.reportName = new InputTemplate("1.", "Vorhabentitle", true,
+            DataType.STRING, InputType.SINGLE_INPUT);
+
+    List<Object> allowedValuesInputC0 = new ArrayList<>();
+    Collections.addAll(allowedValuesInputC0, "Verwaltung & Infrastruktur", "Bildungs- und Wissensstadt",
+            "Teilhabe an der Stadtgesellschaft", "Zukunftsfähige Mobilität");
+    this.reportGroup = new InputTemplate("0.", "Gruppe", true,
+            DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputC0);
+
+    this.sections = new TreeMap<>();
   }
 
   public UUID getTemplateId() {
     return templateId;
   }
 
-  public void addGroup(Group group) throws IllegalArgumentException {
+  public void addSection(Section section) throws IllegalArgumentException {
 
-    if (groups.containsKey(group.getLetter())) {
+    if (sections.containsKey(section.getLetter())) {
       throw new IllegalArgumentException("GroupLetter is already in use");
     }
-    groups.put(group.getLetter(), group);
+    sections.put(section.getLetter(), section);
   }
 
-  public Map<String, Group> getGroups() {
-    return groups;
+  public Map<String, Section> getSections() {
+    return sections;
   }
 
 
@@ -59,37 +89,6 @@ public class ProjectReportTemplate {
     boolean projectReportNameAvailable = false;
     boolean projectReportGroupAvailable = false;
 
-    for (Map.Entry<String, Group> groupEntry : groups.entrySet()) {
-      for (Map.Entry<String, BaseInput> baseInputEntry : groupEntry.getValue().getFields().entrySet()) {
-        BaseInput baseInput = baseInputEntry.getValue();
-
-        if (baseInput.getModifiers().contains(InputModifier.PROJECT_ID)) {
-          if (projectReportIdAvailable) {
-            throw new IllegalArgumentException("Modifier 'PROJECT_ID' can only be added Once");
-          } else {
-            projectReportIdAvailable = true;
-          }
-        }
-
-        if (baseInput.getModifiers().contains(InputModifier.PROJECT_NAME)) {
-          if (projectReportNameAvailable) {
-            throw new IllegalArgumentException("Modifier 'PROJECT_NAME' can only be added Once");
-          } else {
-            projectReportNameAvailable = true;
-          }
-        }
-
-        if (baseInput.getModifiers().contains(InputModifier.PROJECT_GROUP)) {
-          if (projectReportGroupAvailable) {
-            throw new IllegalArgumentException("Modifier 'PROJECT_GROUP' can only be added Once");
-          } else {
-            projectReportGroupAvailable = true;
-          }
-        }
-
-      }
-    }
-
     if (!projectReportIdAvailable) {
       throw new IllegalArgumentException("Field with Modifier 'PROJECT_ID' is missing");
     } else if (!projectReportNameAvailable) {
@@ -97,5 +96,17 @@ public class ProjectReportTemplate {
     } else if (!projectReportGroupAvailable) {
       throw new IllegalArgumentException("Field with Modifier 'PROJECT_GROUP' is missing");
     }
+  }
+
+  public InputTemplate getReportName() {
+    return reportName;
+  }
+
+  public InputTemplate getReportID() {
+    return reportID;
+  }
+
+  public InputTemplate getReportGroup() {
+    return reportGroup;
   }
 }

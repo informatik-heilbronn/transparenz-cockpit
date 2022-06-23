@@ -1,14 +1,10 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.springboot.internal.mapper;
 
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Group;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Section;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.DataType;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.ProjectReport;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.MultiInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SelectMultiInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SelectSingleInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SingleInput;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.Input;
 import de.hhn.seb.labsw.transparentcockpit.backend.springboot.internal.models.project.report.ProjectReportSb;
 
 import java.util.*;
@@ -18,112 +14,62 @@ import java.util.*;
  */
 public class ProjectReportSbMapper {
 
-
     public static ProjectReport toProjectReport(Map<String, Object> input, String projectReportId) {
-        if (input.size() != 2) {
-            throw new IllegalArgumentException("Too much or too little Field found in Input expected '2'");
-        }
+        List<Object> list = new ArrayList<>();//TODO needs to be changed to Values coming from frontend
+        list.add("");
 
-        ProjectReport projectReport = new ProjectReport(UUID.fromString(input.get("templateId").toString()));
+        Input inputReportID = new Input("6.", "Vorhabennummer", true,
+                DataType.STRING, InputType.SINGLE_INPUT, list);
 
-        LinkedHashMap<String, Object> castedInputGroups = (LinkedHashMap<String, Object>) input.get("groups");
-        for (Map.Entry<String, Object> inputGroupEntry : castedInputGroups.entrySet()) {
-            LinkedHashMap<String, Object> castedInputGroup = (LinkedHashMap<String, Object>) inputGroupEntry.getValue();
+        list = new ArrayList<>();
+        list.add("");
+        Input inputReportName = new Input("1.", "Vorhabentitle", true,
+                DataType.STRING, InputType.SINGLE_INPUT, list);
 
-            if (castedInputGroup.size() != 3) {
-                throw new IllegalArgumentException("Too much or too little Field found in Group '" + inputGroupEntry.getKey()
-                        + "' expected '3'");
-            }
+        list = new ArrayList<>();
+        list.add("");
+        List<Object> allowedValuesInputC0 = new ArrayList<>();
+        Collections.addAll(allowedValuesInputC0, "Verwaltung & Infrastruktur", "Bildungs- und Wissensstadt",
+                "Teilhabe an der Stadtgesellschaft", "Zukunftsfähige Mobilität");
+        Input inputReportGroup = new Input("0.", "Gruppe", true,
+                DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputC0, list);
 
-            Group group = new Group(castedInputGroup.get("letter").toString(), castedInputGroup.get("name").toString());
+        ProjectReport projectReport = new ProjectReport(UUID.fromString(input.get("templateId").toString()), inputReportID, inputReportName, inputReportGroup);
 
-            LinkedHashMap<String, Object> castedInputFields = (LinkedHashMap<String, Object>) castedInputGroup.get("fields");
+        LinkedHashMap<String, Object> castedInputSections = (LinkedHashMap<String, Object>) input.get("sections");
+        for (Map.Entry<String, Object> inputGroupEntry : castedInputSections.entrySet()) {
+            LinkedHashMap<String, Object> castedInputSection = (LinkedHashMap<String, Object>) inputGroupEntry.getValue();
+
+            Section section = new Section(castedInputSection.get("letter").toString(), castedInputSection.get("name").toString());
+
+            LinkedHashMap<String, Object> castedInputFields = (LinkedHashMap<String, Object>) castedInputSection.get("fields");
             for (Map.Entry<String, Object> castedInputFieldEntry : castedInputFields.entrySet()) {
                 LinkedHashMap<String, Object> castedInputField =
                         (LinkedHashMap<String, Object>) castedInputFieldEntry.getValue();
 
-                if (!(castedInputField.size() == 6 | castedInputField.size() == 5)) {
-                    throw new IllegalArgumentException("Too much or too little Field found in Field '"
-                            + inputGroupEntry.getKey() + "." + castedInputFieldEntry.getKey() + "' expected '5' or '6'");
-                }
-
-                ArrayList<String> modifierList = (ArrayList<String>) castedInputField.get("modifiers");
-                Set<InputModifier> modifiers = new HashSet<>();
-                for (String modifier : modifierList) {
-                    modifiers.add(InputModifier.valueOf(modifier));
-                }
 
                 DataType dataType = DataType.valueOf(castedInputField.get("type").toString());
 
-                InputType type = InputType.valueOf(castedInputField.get("inputType").toString());
-                if (type == InputType.SINGLE_INPUT) {
-                    Object castedValue = castedInputField.getOrDefault("value", null);
-                    if (castedValue instanceof List | castedValue instanceof Map) {
+                InputType inputType = InputType.valueOf(castedInputField.get("inputType").toString());
+                Boolean isRequired = Boolean.getBoolean(castedInputField.get("isRequired").toString());
+
+                Input inputOut = new Input(castedInputField.get("number").toString(),
+                        castedInputField.get("name").toString(), isRequired, dataType, inputType, new ArrayList<>(), new ArrayList<>());
+
+                ArrayList<Object> castedInputValues = (ArrayList<Object>) castedInputField.getOrDefault("values",
+                        new ArrayList<>());
+                for (Object inputValue : castedInputValues) {
+                    if (inputValue instanceof List | inputValue instanceof Map) {
                         throw new IllegalArgumentException("'" + inputGroupEntry.getKey() + "." + castedInputFieldEntry.getKey()
-                                + ".value' can not be an List or Map");
+                                + ".values' can not be an List or Map");
                     }
 
-                    SingleInput singleInput;
-                    if (modifiers.contains(InputModifier.AUTOGENERATED) && modifiers.contains(InputModifier.PROJECT_ID)) {
-                        singleInput = new SingleInput(castedInputField.get("number").toString(),
-                                castedInputField.get("name").toString(), modifiers, dataType, projectReportId);
-                    } else {
-                        singleInput = new SingleInput(castedInputField.get("number").toString(),
-                                castedInputField.get("name").toString(), modifiers, dataType,
-                                ValueSbMapper.castValue(dataType, castedInputField.getOrDefault("value", null)));
-                    }
-
-                    group.addField(singleInput);
-                } else if (type == InputType.MULTI_INPUT) {
-                    MultiInput multiInput = new MultiInput(castedInputField.get("number").toString(),
-                            castedInputField.get("name").toString(), modifiers, dataType, new ArrayList<>());
-
-                    ArrayList<Object> castedInputValues = (ArrayList<Object>) castedInputField.getOrDefault("values",
-                            new ArrayList<>());
-                    for (Object inputValue : castedInputValues) {
-                        if (inputValue instanceof List | inputValue instanceof Map) {
-                            throw new IllegalArgumentException("'" + inputGroupEntry.getKey() + "." + castedInputFieldEntry.getKey()
-                                    + ".values' can not be an List or Map");
-                        }
-
-                        multiInput.addValues(ValueSbMapper.castValue(dataType, inputValue));
-                    }
-
-                    group.addField(multiInput);
-                } else if (type == InputType.SELECT_SINGLE_INPUT) {
-                    Object castedValue = castedInputField.getOrDefault("value", null);
-                    if (castedValue instanceof List | castedValue instanceof Map) {
-                        throw new IllegalArgumentException("'" + inputGroupEntry.getKey() + "." + castedInputFieldEntry.getKey()
-                                + ".value' can not be an List or Map");
-                    }
-
-                    SelectSingleInput selectSingleInput = new SelectSingleInput(castedInputField.get("number").toString(),
-                            castedInputField.get("name").toString(), modifiers, dataType, new ArrayList<>(),
-                            ValueSbMapper.castValue(dataType, castedValue));
-
-                    group.addField(selectSingleInput);
-                } else if (type == InputType.SELECT_MULTI_INPUT) {
-                    SelectMultiInput selectMultiInput = new SelectMultiInput(castedInputField.get("number").toString(),
-                            castedInputField.get("name").toString(), modifiers, dataType, new ArrayList<>(), new ArrayList<>());
-
-                    ArrayList<Object> castedInputValues = (ArrayList<Object>) castedInputField.getOrDefault("values",
-                            new ArrayList<>());
-                    for (Object inputValue : castedInputValues) {
-                        if (inputValue instanceof List | inputValue instanceof Map) {
-                            throw new IllegalArgumentException("'" + inputGroupEntry.getKey() + "." + castedInputFieldEntry.getKey()
-                                    + ".values' can not be an List or Map");
-                        }
-
-                        selectMultiInput.addValue(ValueSbMapper.castValue(dataType, inputValue));
-                    }
-
-                    group.addField(selectMultiInput);
-
+                    inputOut.addValues(ValueSbMapper.castValue(dataType, inputValue));
                 }
+                section.addField(inputOut);
             }
-            projectReport.addGroup(group);
+            projectReport.addSection(section);
         }
-
         return projectReport;
     }
 
@@ -131,8 +77,8 @@ public class ProjectReportSbMapper {
         ProjectReportSb convertedProjectReport = new ProjectReportSb(projectReport.getProjectNumber(),
                 projectReport.getName(), projectReport.getGroup(), projectReport.getTemplateId());
 
-        for (Map.Entry<String, Group> groupEntry : projectReport.getGroups().entrySet()) {
-            convertedProjectReport.addGroup(groupEntry.getValue());
+        for (Map.Entry<String, Section> groupEntry : projectReport.getSections().entrySet()) {
+            convertedProjectReport.addSection(groupEntry.getValue());
         }
 
         return convertedProjectReport;

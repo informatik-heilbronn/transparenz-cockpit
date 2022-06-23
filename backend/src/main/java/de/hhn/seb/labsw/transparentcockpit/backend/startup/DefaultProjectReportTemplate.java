@@ -1,17 +1,15 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.startup;
 
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Group;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Section;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.DataType;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.ProjectReportTemplate;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.MultiInputTemplate;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.SelectMultiInputTemplate;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.SelectSingleInputTemplate;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.SingleInputTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.InputTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Default ProjectReportTemplate of Stadt Heilbronn.
@@ -24,13 +22,13 @@ public class DefaultProjectReportTemplate {
     public DefaultProjectReportTemplate() {
         projectReportTemplate = new ProjectReportTemplate(UUID.randomUUID());
 
-        groupA();
-        groupB();
-        groupC();
-        groupD();
-        groupE();
-        groupF();
-        groupG();
+        sectionA();
+        sectionB();
+        sectionC();
+        sectionD();
+        sectionE();
+        sectionF();
+        sectionG();
     }
 
 
@@ -38,19 +36,16 @@ public class DefaultProjectReportTemplate {
         return projectReportTemplate;
     }
 
-    private void groupA() {
-        Group groupA = new Group("A.", "Vorhabenauftrag");
+    private void sectionA() {
+        Section sectionA = new Section("A.", "Vorhabenauftrag");
 
+        /* Vorhabens name existiert im ProjektReportTemplate
         Set<InputModifier> modifiersInputA1 = new HashSet<>();
-        modifiersInputA1.add(InputModifier.REQUIRED);
-        modifiersInputA1.add(InputModifier.PROJECT_NAME);
-        SingleInputTemplate inputA1 = new SingleInputTemplate("1.", "Vorhabentitle", modifiersInputA1,
-                DataType.STRING);
-        groupA.addField(inputA1);
+        InputTemplate inputA1 = new InputTemplate("1.", "Vorhabentitle", true,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionA.addField(inputA1);*/
 
-        Set<InputModifier> modifiersInputA2 = new HashSet<>();
-        modifiersInputA2.add(InputModifier.REQUIRED);
-        List<Object> allowedValuesInputA2 = new ArrayList<>();
+        List<Object> allowedValuesInputA2 = new ArrayList<>();//TODO auslesen der werte aus datei
         Collections.addAll(allowedValuesInputA2, "Dezernat_I", "101", "102", "103", "104", "105", "106", "107", "14", "30",
                 "37", "GPR", "Dezernat_II", "10", "20", "23", "Dezernat_III", "32", "33", "40", "40.42", "40.43", "40.44", "40.45",
                 "40.47", "46", "50", "53", "Dezernat_IV", "60", "62", "63", "65", "66", "67", "68", "70", "Stadtsiedlung Heilbronn GmbH",
@@ -59,67 +54,54 @@ public class DefaultProjectReportTemplate {
                 "experimenta – Science Center der Region Heilbronn-Franken gGmbH", "Stadtwerke Heilbronn GmbH (SWH)", "Heilbronner Versorgungs GmbH (HVG)",
                 "Heilbronner-Hohenloher-Haller-Nahverkehr GmbH (HNV)", "Wirtschaftsförderung Raum Heilbronn GmbH (WFG)", "Katharinenstift Heilbronn gGmbH",
                 "Volkshochschule Heilbronn gGmbH", "EE Bürgerenergie Heilbronn GmbH & Co. KG", "Energieagentur Heilbronn GmbH");
-        SelectSingleInputTemplate inputA2 = new SelectSingleInputTemplate("2.", "Federführendes Amt",
-                modifiersInputA2, DataType.STRING, allowedValuesInputA2);
-        groupA.addField(inputA2);
+        InputTemplate inputA2 = new InputTemplate("2.", "Federführendes Amt",
+                true, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputA2);
+        sectionA.addField(inputA2);
 
-        Set<InputModifier> modifiersInputA3 = new HashSet<>();
-        modifiersInputA3.add(InputModifier.REQUIRED);
-        SingleInputTemplate inputA3 = new SingleInputTemplate("3.", "Federführende Abteilung",
-                modifiersInputA3, DataType.STRING);
-        groupA.addField(inputA3);
+        InputTemplate inputA3 = new InputTemplate("3.", "Federführende Abteilung",
+                true, DataType.STRING, InputType.SINGLE_INPUT);
+        sectionA.addField(inputA3);
 
-        Set<InputModifier> modifiersInputA4 = new HashSet<>();
-        modifiersInputA4.add(InputModifier.REQUIRED);
-        SingleInputTemplate inputA4 = new SingleInputTemplate("4.", "Ansprechpartner*in", modifiersInputA4,
-                DataType.STRING);
-        groupA.addField(inputA4);
+        InputTemplate inputA4 = new InputTemplate("4.", "Ansprechpartner*in", true,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionA.addField(inputA4);
 
-        Set<InputModifier> modifiersInputA5 = new HashSet<>();
-        modifiersInputA5.add(InputModifier.REQUIRED);
         List<Object> allowedValuesInputA5 = new ArrayList<>();
         Collections.addAll(allowedValuesInputA5, "Maßnahme (langfristig)", "Maßnahme (mittelfristig)", "Maßnahme (kurzfristig)",
                 "Reallabor", "noch undefiniert");
-        SelectSingleInputTemplate inputA5 = new SelectSingleInputTemplate("5.", "Vorhabentyp",
-                modifiersInputA5, DataType.STRING, allowedValuesInputA5);
-        groupA.addField(inputA5);
+        InputTemplate inputA5 = new InputTemplate("5.", "Vorhabentyp",
+                true, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputA5);
+        sectionA.addField(inputA5);
 
-        Set<InputModifier> modifiersInputA6 = new HashSet<>();
-        modifiersInputA6.add(InputModifier.REQUIRED);
-        modifiersInputA6.add(InputModifier.PROJECT_ID);
-        modifiersInputA6.add(InputModifier.AUTOGENERATED);
-        SingleInputTemplate inputA6 = new SingleInputTemplate("6.", "Vorhabennummer", modifiersInputA6,
-                DataType.STRING);
-        groupA.addField(inputA6);
-
-        Set<InputModifier> modifiersInputA7 = new HashSet<>();
-        modifiersInputA7.add(InputModifier.REQUIRED);
+        /*existiert in PorjektReportTemplate
+        InputTemplate inputA6 = new InputTemplate("6.", "Vorhabennummer", true,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionA.addField(inputA6);//T
+        */
         List<Object> allowedValuesInputA7 = new ArrayList<>();
         Collections.addAll(allowedValuesInputA7, "Eigenmotivation", "gesetzliches Erfordernis", "Auftrag", "Fördermittel/-Wettbewerb",
                 "anderer Grund");
-        SelectSingleInputTemplate inputA7 = new SelectSingleInputTemplate("7.", "Vorhabennummer",
-                modifiersInputA7, DataType.STRING, allowedValuesInputA7);
-        groupA.addField(inputA7);
+        InputTemplate inputA7 = new InputTemplate("7.", "Vorhabennummer",
+                true, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputA7);
+        sectionA.addField(inputA7);
 
-        Set<InputModifier> modifiersInputA71 = new HashSet<>();
-        modifiersInputA71.add(InputModifier.REQUIRED);
-        SingleInputTemplate inputA71 = new SingleInputTemplate("7.1", "Gesetz, Beschluss, etc. hier  angeben:",
-                modifiersInputA71, DataType.STRING);
-        groupA.addField(inputA71);
+        InputTemplate inputA71 = new InputTemplate("7.1", "Gesetz, Beschluss, etc. hier  angeben:",
+                true, DataType.STRING, InputType.SINGLE_INPUT);
+        sectionA.addField(inputA71);
 
-        projectReportTemplate.addGroup(groupA);
+        projectReportTemplate.addSection(sectionA);
     }
 
-    private void groupB() {
-        Group groupB = new Group("B.", "Vorhabeninhalt und Ziele");
+    private void sectionB() {
+        Section sectionB = new Section("B.", "Vorhabeninhalt und Ziele");
 
-        SingleInputTemplate inputB1 = new SingleInputTemplate("1.", "Beschreibung", new HashSet<>(),
-                DataType.STRING);
-        groupB.addField(inputB1);
+        InputTemplate inputB1 = new InputTemplate("1.", "Beschreibung", false,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionB.addField(inputB1);
 
-        SingleInputTemplate inputB2 = new SingleInputTemplate("2.", "Vorhabenziel", new HashSet<>(),
-                DataType.STRING);
-        groupB.addField(inputB2);
+        InputTemplate inputB2 = new InputTemplate("2.", "Vorhabenziel", false,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionB.addField(inputB2);
 
         List<Object> allowedValuesInputB3 = new ArrayList<>();
         Collections.addAll(allowedValuesInputB3, "Dezernat_I", "101", "102", "103", "104", "105", "106", "107", "14", "30",
@@ -130,218 +112,205 @@ public class DefaultProjectReportTemplate {
                 "experimenta – Science Center der Region Heilbronn-Franken gGmbH", "Stadtwerke Heilbronn GmbH (SWH)", "Heilbronner Versorgungs GmbH (HVG)",
                 "Heilbronner-Hohenloher-Haller-Nahverkehr GmbH (HNV)", "Wirtschaftsförderung Raum Heilbronn GmbH (WFG)", "Katharinenstift Heilbronn gGmbH",
                 "Volkshochschule Heilbronn gGmbH", "EE Bürgerenergie Heilbronn GmbH & Co. KG", "Energieagentur Heilbronn GmbH");
-        SelectMultiInputTemplate inputB3 = new SelectMultiInputTemplate("3.", "interne Projektbeteiligte",
-                new HashSet<>(), DataType.STRING, allowedValuesInputB3);
-        groupB.addField(inputB3);
+        InputTemplate inputB3 = new InputTemplate("3.", "interne Projektbeteiligte",
+                false, DataType.STRING, InputType.SELECT_MULTI_INPUT, allowedValuesInputB3);
+        sectionB.addField(inputB3);
 
-        MultiInputTemplate inputB4 = new MultiInputTemplate("4.", "externe Projektbeteiligte", new HashSet<>(),
-                DataType.STRING);
-        groupB.addField(inputB4);
+        InputTemplate inputB4 = new InputTemplate("4.", "externe Projektbeteiligte", false,
+                DataType.STRING, InputType.MULTI_INPUT);
+        sectionB.addField(inputB4);
 
-        projectReportTemplate.addGroup(groupB);
+        projectReportTemplate.addSection(sectionB);
     }
 
-    private void groupC() {
-
-        Group groupC = new Group("C.", "Vorhabenkontext");
-
-        Set<InputModifier> modifiersInputC0 = new HashSet<>();
-        modifiersInputC0.add(InputModifier.REQUIRED);
-        modifiersInputC0.add(InputModifier.PROJECT_GROUP);
+    private void sectionC() {
+        Section sectionC = new Section("C.", "Vorhabenkontext");
+        /*existiert in ProjektReportTemplate
         List<Object> allowedValuesInputC0 = new ArrayList<>();
         Collections.addAll(allowedValuesInputC0, "Verwaltung & Infrastruktur", "Bildungs- und Wissensstadt",
                 "Teilhabe an der Stadtgesellschaft", "Zukunftsfähige Mobilität");
-        SelectSingleInputTemplate inputC0 = new SelectSingleInputTemplate("0.", "Gruppe", modifiersInputC0,
-                DataType.STRING, allowedValuesInputC0);
-        groupC.addField(inputC0);
-
-        Set<InputModifier> modifiersInputC1A = new HashSet<>();
-        modifiersInputC1A.add(InputModifier.REQUIRED);
+        InputTemplate inputC0 = new InputTemplate("0.", "Gruppe",true,
+                DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputC0);
+        sectionC.addField(inputC0);
+*/
         List<Object> allowedValuesInputC1A = new ArrayList<>();
         Collections.addAll(allowedValuesInputC1A, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputC1A = new SelectSingleInputTemplate("1.a",
-                "Strategiefelder: Verwaltung & Infrastruktur", modifiersInputC1A, DataType.STRING, allowedValuesInputC1A);
-        groupC.addField(inputC1A);
+        InputTemplate inputC1A = new InputTemplate("1.a",
+                "Strategiefelder: Verwaltung & Infrastruktur", true, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputC1A);
+        sectionC.addField(inputC1A);
 
-        Set<InputModifier> modifiersInputC1B = new HashSet<>();
-        modifiersInputC1B.add(InputModifier.REQUIRED);
         List<Object> allowedValuesInputC1B = new ArrayList<>();
         Collections.addAll(allowedValuesInputC1B, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputC1B = new SelectSingleInputTemplate("1.b",
-                "Strategiefelder: Bildungs- und Wissensstadt", modifiersInputC1B, DataType.STRING, allowedValuesInputC1B);
-        groupC.addField(inputC1B);
+        InputTemplate inputC1B = new InputTemplate("1.b",
+                "Strategiefelder: Bildungs- und Wissensstadt", true, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputC1B);
+        sectionC.addField(inputC1B);
 
-        Set<InputModifier> modifiersInputC1C = new HashSet<>();
-        modifiersInputC1C.add(InputModifier.REQUIRED);
+
         List<Object> allowedValuesInputC1C = new ArrayList<>();
         Collections.addAll(allowedValuesInputC1C, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputC1C = new SelectSingleInputTemplate("1.c",
-                "Strategiefelder: Teilhabe an der Stadtgesellschaft", modifiersInputC1C, DataType.STRING,
+        InputTemplate inputC1C = new InputTemplate("1.c",
+                "Strategiefelder: Teilhabe an der Stadtgesellschaft", true, DataType.STRING, InputType.SELECT_SINGLE_INPUT,
                 allowedValuesInputC1C);
-        groupC.addField(inputC1C);
+        sectionC.addField(inputC1C);
 
-        Set<InputModifier> modifiersInputC1D = new HashSet<>();
-        modifiersInputC1D.add(InputModifier.REQUIRED);
         List<Object> allowedValuesInputC1D = new ArrayList<>();
         Collections.addAll(allowedValuesInputC1D, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputC1D = new SelectSingleInputTemplate("1.d",
-                "Strategiefelder: Zukunftsfähige Mobilität", modifiersInputC1D, DataType.STRING, allowedValuesInputC1D);
-        groupC.addField(inputC1D);
+        InputTemplate inputC1D = new InputTemplate("1.d",
+                "Strategiefelder: Zukunftsfähige Mobilität", true, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputC1D);
+        sectionC.addField(inputC1D);
 
-        Set<InputModifier> modifiersInputC2 = new HashSet<>();
-        modifiersInputC2.add(InputModifier.REQUIRED);
         List<Object> allowedValuesInputC2 = new ArrayList<>();
-        Collections.addAll(allowedValuesInputC2, "Ja", "Nein", "Noch in Klärung" );
-        SelectSingleInputTemplate inputC2 = new SelectSingleInputTemplate("2",
-                "Vorhaben ist beteiligungspflichtig nach Landespersonal-Vertretungsgesetz", modifiersInputC2,
-                DataType.STRING, allowedValuesInputC2);
-        groupC.addField(inputC2);
+        Collections.addAll(allowedValuesInputC2, "Ja", "Nein", "Noch in Klärung");
+        InputTemplate inputC2 = new InputTemplate("2",
+                "Vorhaben ist beteiligungspflichtig nach Landespersonal-Vertretungsgesetz", true,
+                DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputC2);
+        sectionC.addField(inputC2);
 
-        projectReportTemplate.addGroup(groupC);
+        projectReportTemplate.addSection(sectionC);
     }
 
-    private void groupD() {
-        Group groupD = new Group("D.", "Vorhaben-Status");
+    private void sectionD() {
+        Section sectionD = new Section("D.", "Vorhaben-Status");
 
         List<Object> allowedValuesInputD1 = new ArrayList<>();
         Collections.addAll(allowedValuesInputD1, "Im Plan", "Teilweise kritisch", "Kritisch");
-        SelectSingleInputTemplate inputD1 = new SelectSingleInputTemplate("1.", "Gesamtstatus",
-                new HashSet<>(), DataType.STRING, allowedValuesInputD1);
-        groupD.addField(inputD1);
+        InputTemplate inputD1 = new InputTemplate("1.", "Gesamtstatus",
+                false, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputD1);
+        sectionD.addField(inputD1);
 
         List<Object> allowedValuesInputD2 = new ArrayList<>();
         Collections.addAll(allowedValuesInputD2, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
-        SelectSingleInputTemplate inputD2 = new SelectSingleInputTemplate("2.", "Gesamtfortschritt",
-                new HashSet<>(), DataType.INTEGER, allowedValuesInputD2);
-        groupD.addField(inputD2);
+        InputTemplate inputD2 = new InputTemplate("2.", "Gesamtfortschritt",
+                false, DataType.INTEGER, InputType.SELECT_SINGLE_INPUT, allowedValuesInputD2);
+        sectionD.addField(inputD2);
 
         List<Object> allowedValuesInputD3 = new ArrayList<>();
         Collections.addAll(allowedValuesInputD3, "Ideenfindung", "Vorbereitung", "Planung", "Umsetzung", "Abgeschlossen", "Zurückgestellt");
-        SelectSingleInputTemplate inputD3 = new SelectSingleInputTemplate("3.", "Bearbeitungsstand",
-                new HashSet<>(), DataType.STRING, allowedValuesInputD3);
-        groupD.addField(inputD3);
+        InputTemplate inputD3 = new InputTemplate("3.", "Bearbeitungsstand",
+                false, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputD3);
+        sectionD.addField(inputD3);
 
-        projectReportTemplate.addGroup(groupD);
+        projectReportTemplate.addSection(sectionD);
     }
 
-    private void groupE() {
-        Group groupE = new Group("E.", "Umsetzungszeitraum");
+    private void sectionE() {
+        Section sectionE = new Section("E.", "Umsetzungszeitraum");
 
-        SingleInputTemplate inputE1 = new SingleInputTemplate("1.", "geplanter Zeitpunkt für Vorhabenbeginn",
-                new HashSet<>(), DataType.DATE);
-        groupE.addField(inputE1);
+        InputTemplate inputE1 = new InputTemplate("1.", "geplanter Zeitpunkt für Vorhabenbeginn",
+                false, DataType.DATE, InputType.SINGLE_INPUT);
+        sectionE.addField(inputE1);
 
-        SingleInputTemplate inputE2 = new SingleInputTemplate("2.",
-                "ursprünglich geplanter Zeitpunkt für Vorhabenende", new HashSet<>(), DataType.DATE);
-        groupE.addField(inputE2);
+        InputTemplate inputE2 = new InputTemplate("2.",
+                "ursprünglich geplanter Zeitpunkt für Vorhabenende", false, DataType.DATE, InputType.SINGLE_INPUT);
+        sectionE.addField(inputE2);
 
-        SingleInputTemplate inputE3 = new SingleInputTemplate("3.",
-                "ursprünglich geplanter Zeitpunkt für Vorhabenende", new HashSet<>(), DataType.DATE);
-        groupE.addField(inputE3);
+        InputTemplate inputE3 = new InputTemplate("3.",
+                "ursprünglich geplanter Zeitpunkt für Vorhabenende", false, DataType.DATE, InputType.SINGLE_INPUT);
+        sectionE.addField(inputE3);
 
-        projectReportTemplate.addGroup(groupE);
+        projectReportTemplate.addSection(sectionE);
     }
 
-    private void groupF() {
+    private void sectionF() {
 
-        Group groupF = new Group("F.", "Ressourcen");
+        Section sectionF = new Section("F.", "Ressourcen");
 
-        SingleInputTemplate inputF1 = new SingleInputTemplate("1.", "Kosten, soweit bezifferbar in EUR",
-                new HashSet<>(), DataType.INTEGER);
-        groupF.addField(inputF1);
+        InputTemplate inputF1 = new InputTemplate("1.", "Kosten, soweit bezifferbar in EUR",
+                false, DataType.INTEGER, InputType.SINGLE_INPUT);
+        sectionF.addField(inputF1);
 
         List<Object> allowedValuesInputF2 = new ArrayList<>();
         allowedValuesInputF2.add("Ja");
         allowedValuesInputF2.add("Nein");
-        SelectSingleInputTemplate inputF2 = new SelectSingleInputTemplate("2.",
-                "Mittel im aktuellen HH enthalten?", new HashSet<>(), DataType.STRING, allowedValuesInputF2);
-        groupF.addField(inputF2);
+        InputTemplate inputF2 = new InputTemplate("2.",
+                "Mittel im aktuellen HH enthalten?", false, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputF2);
+        sectionF.addField(inputF2);
 
         List<Object> allowedValuesInputF3 = new ArrayList<>();
         allowedValuesInputF3.add("Ja");
         allowedValuesInputF3.add("Nein");
-        SelectSingleInputTemplate inputF3 = new SelectSingleInputTemplate("3.",
-                "Mittel für neuen HH beantragt?", new HashSet<>(), DataType.STRING, allowedValuesInputF3);
-        groupF.addField(inputF3);
+        InputTemplate inputF3 = new InputTemplate("3.",
+                "Mittel für neuen HH beantragt?", false, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputF3);
+        sectionF.addField(inputF3);
 
-        projectReportTemplate.addGroup(groupF);
+        projectReportTemplate.addSection(sectionF);
     }
 
-    private void groupG() {
+    private void sectionG() {
 
-        Group groupG = new Group("G.", "Sonstige Angaben");
+        Section sectionG = new Section("G.", "Sonstige Angaben");
 
         List<Object> allowedValuesInputG1 = new ArrayList<>();
         allowedValuesInputG1.add("Ja");
         allowedValuesInputG1.add("Nein");
-        SelectSingleInputTemplate inputG1 = new SelectSingleInputTemplate("1.", "Benötigt die Aktivität "
+        InputTemplate inputG1 = new InputTemplate("1.", "Benötigt die Aktivität "
                 + "später eine Anbindung an das Kassensystem, bzw. ist ein Bezahlsystem beabsichtigt?",
-                new HashSet<>(), DataType.STRING, allowedValuesInputG1);
-        groupG.addField(inputG1);
+                false, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputG1);
+        sectionG.addField(inputG1);
 
         List<Object> allowedValuesInputG2 = new ArrayList<>();
         allowedValuesInputG2.add("Ja");
         allowedValuesInputG2.add("Nein");
-        SelectSingleInputTemplate inputG2 = new SelectSingleInputTemplate("2.",
-                "Gibt es Redundanzen zu einem anderen Projekt?", new HashSet<>(), DataType.STRING, allowedValuesInputG2);
-        groupG.addField(inputG2);
+        InputTemplate inputG2 = new InputTemplate("2.",
+                "Gibt es Redundanzen zu einem anderen Projekt?", false, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputG2);
+        sectionG.addField(inputG2);
 
-        SingleInputTemplate inputG3 = new SingleInputTemplate("3.", "Nennung des Projekts", new HashSet<>(),
-                DataType.STRING);
-        groupG.addField(inputG3);
+        InputTemplate inputG3 = new InputTemplate("3.", "Nennung des Projekts", false,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionG.addField(inputG3);
 
         List<Object> allowedValuesInputG4 = new ArrayList<>();
         allowedValuesInputG4.add("Ja");
         allowedValuesInputG4.add("Nein");
-        SelectSingleInputTemplate inputG4 = new SelectSingleInputTemplate("4.",
-                "Gibt es Synergie-effekte in Verbindung mit einem anderen Projekt?", new HashSet<>(), DataType.STRING,
+        InputTemplate inputG4 = new InputTemplate("4.",
+                "Gibt es Synergie-effekte in Verbindung mit einem anderen Projekt?", false, DataType.STRING, InputType.SELECT_SINGLE_INPUT,
                 allowedValuesInputG4);
-        groupG.addField(inputG4);
+        sectionG.addField(inputG4);
 
-        SingleInputTemplate inputG5 = new SingleInputTemplate("5.", "Nennung des Projekts", new HashSet<>(),
-                DataType.STRING);
-        groupG.addField(inputG5);
+        InputTemplate inputG5 = new InputTemplate("5.", "Nennung des Projekts", false,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionG.addField(inputG5);
 
         List<Object> allowedValuesInputG6A = new ArrayList<>();
         Collections.addAll(allowedValuesInputG6A, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputG6A = new SelectSingleInputTemplate("6.a",
-                "Wirkung des Vorhabens: Reduzierung des Verwaltungsaufwands (z.B. Personalverwaltung)", new HashSet<>(),
-                DataType.STRING, allowedValuesInputG6A);
-        groupG.addField(inputG6A);
+        InputTemplate inputG6A = new InputTemplate("6.a",
+                "Wirkung des Vorhabens: Reduzierung des Verwaltungsaufwands (z.B. Personalverwaltung)", false,
+                DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputG6A);
+        sectionG.addField(inputG6A);
 
         List<Object> allowedValuesInputG6B = new ArrayList<>();
         Collections.addAll(allowedValuesInputG6B, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputG6B = new SelectSingleInputTemplate("6.b",
+        InputTemplate inputG6B = new InputTemplate("6.b",
                 "Wirkung des Vorhabens: Reduzierung der Gemeinkosten durch gemeinsame Verwendung von Infrastruktur "
-                        + "(z.B. IT)", new HashSet<>(), DataType.STRING, allowedValuesInputG6B);
-        groupG.addField(inputG6B);
+                        + "(z.B. IT)", false, DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputG6B);
+        sectionG.addField(inputG6B);
 
         List<Object> allowedValuesInputG6C = new ArrayList<>();
         Collections.addAll(allowedValuesInputG6C, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputG6C = new SelectSingleInputTemplate("6.c",
-                "Wirkung des Vorhabens: Raschere Umsetzung durch Zusammenführung des Know-hows", new HashSet<>(),
-                DataType.STRING, allowedValuesInputG6C);
-        groupG.addField(inputG6C);
+        InputTemplate inputG6C = new InputTemplate("6.c",
+                "Wirkung des Vorhabens: Raschere Umsetzung durch Zusammenführung des Know-hows", false,
+                DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputG6C);
+        sectionG.addField(inputG6C);
 
         List<Object> allowedValuesInputG6D = new ArrayList<>();
         Collections.addAll(allowedValuesInputG6D, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputG6D = new SelectSingleInputTemplate("6.d",
-                "Wirkung des Vorhabens: Möglichkeit zur Entwicklung neuer Serviceangebote oder Produkte", new HashSet<>(),
-                DataType.STRING, allowedValuesInputG6D);
-        groupG.addField(inputG6D);
+        InputTemplate inputG6D = new InputTemplate("6.d",
+                "Wirkung des Vorhabens: Möglichkeit zur Entwicklung neuer Serviceangebote oder Produkte", false,
+                DataType.STRING, InputType.SELECT_SINGLE_INPUT, allowedValuesInputG6D);
+        sectionG.addField(inputG6D);
 
         List<Object> allowedValuesInputG6E = new ArrayList<>();
         Collections.addAll(allowedValuesInputG6E, "vorrangig unterstürtzt", "grundsätzlich unterstützt", "nicht unterstützt");
-        SelectSingleInputTemplate inputG6E = new SelectSingleInputTemplate("6.e",
-                "Wirkung des Vorhabens: Möglichkeit zur Erhöhung des Kundennutzens", new HashSet<>(), DataType.STRING,
-                allowedValuesInputG6E);
-        groupG.addField(inputG6E);
+        InputTemplate inputG6E = new InputTemplate("6.e",
+                "Wirkung des Vorhabens: Möglichkeit zur Erhöhung des Kundennutzens", false, DataType.STRING,
+                InputType.SELECT_SINGLE_INPUT, allowedValuesInputG6E);
+        sectionG.addField(inputG6E);
 
-        SingleInputTemplate inputG7 = new SingleInputTemplate("7.", "freie Anmerkungen", new HashSet<>(),
-                DataType.STRING);
-        groupG.addField(inputG7);
+        InputTemplate inputG7 = new InputTemplate("7.", "freie Anmerkungen", false,
+                DataType.STRING, InputType.SINGLE_INPUT);
+        sectionG.addField(inputG7);
 
-        projectReportTemplate.addGroup(groupG);
+        projectReportTemplate.addSection(sectionG);
     }
 
 }

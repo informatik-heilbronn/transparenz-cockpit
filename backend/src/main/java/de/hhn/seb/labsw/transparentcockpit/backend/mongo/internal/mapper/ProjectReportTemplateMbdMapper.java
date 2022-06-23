@@ -1,9 +1,9 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.mapper;
 
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Group;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group.Section;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.ProjectReportTemplate;
-import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template.GroupTemplateMdb;
 import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template.ProjectReportTemplateMdb;
+import de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template.SectionTemplateMdb;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -19,23 +19,27 @@ public class ProjectReportTemplateMbdMapper {
         ProjectReportTemplateMdb projectReportTemplateMdb = new ProjectReportTemplateMdb(
                 projectReportTemplate.getTemplateId().toString());
 
-        for (Map.Entry<String, Group> entry : projectReportTemplate.getGroups().entrySet()) {
-            String key = entry.getKey();
-            Group value = entry.getValue();
+        projectReportTemplateMdb.setTemplateId(projectReportTemplate.getTemplateId().toString());
+        projectReportTemplateMdb.setReportGroup(projectReportTemplate.getReportGroup());
+        projectReportTemplateMdb.setReportID(projectReportTemplate.getReportID());
 
-            projectReportTemplateMdb.addGroup(key, GroupTemplateMdbMapper.toGroupTemplateMdb(value));
+        for (Map.Entry<String, Section> entry : projectReportTemplate.getSections().entrySet()) {
+            String key = entry.getKey();
+            Section value = entry.getValue();
+
+            projectReportTemplateMdb.addGroup(key, SectionTemplateMdbMapper.toSectionTemplateMdb(value));
         }
         return projectReportTemplateMdb;
     }
 
     public static ProjectReportTemplate toProjectReportTemplate(ProjectReportTemplateMdb projectReportTemplateMdb) {
         ProjectReportTemplate projectReportTemplate = new ProjectReportTemplate(
-                UUID.fromString(projectReportTemplateMdb.getTemplateId()));
+                UUID.fromString(projectReportTemplateMdb.getTemplateId()), projectReportTemplateMdb.getReportID(), projectReportTemplateMdb.getReportName(), projectReportTemplateMdb.getReportGroup());
 
-        for (Map.Entry<String, GroupTemplateMdb> entry : projectReportTemplateMdb.getGroups().entrySet()) {
-            GroupTemplateMdb value = entry.getValue();
+        for (Map.Entry<String, SectionTemplateMdb> entry : projectReportTemplateMdb.getSections().entrySet()) {
+            SectionTemplateMdb value = entry.getValue();
 
-            projectReportTemplate.addGroup(GroupTemplateMdbMapper.toGroup(value));
+            projectReportTemplate.addSection(SectionTemplateMdbMapper.toSection(value));
         }
         return projectReportTemplate;
     }
@@ -43,19 +47,19 @@ public class ProjectReportTemplateMbdMapper {
     public static ProjectReportTemplate sort(ProjectReportTemplate projectReportTemplate) {
         ProjectReportTemplate sortedProjectReportTemplate = new ProjectReportTemplate(projectReportTemplate.getTemplateId());
 
-        Map<String, Group> sortedGroupMap = new TreeMap<>();
-        projectReportTemplate.getGroups().entrySet().stream()
+        Map<String, Section> sortedGroupMap = new TreeMap<>();
+        projectReportTemplate.getSections().entrySet().stream()
                 .sorted(Comparator.comparing(o -> o.getValue().getLetter()))
                 .forEachOrdered(groupEntry -> sortedGroupMap.put(groupEntry.getKey(), groupEntry.getValue()));
 
-        for (Map.Entry<String, Group> groupEntry : sortedGroupMap.entrySet()) {
-            Group sortedGroup = new Group(groupEntry.getValue().getLetter(), groupEntry.getValue().getName());
+        for (Map.Entry<String, Section> groupEntry : sortedGroupMap.entrySet()) {
+            Section sortedSectionA = new Section(groupEntry.getValue().getLetter(), groupEntry.getValue().getName());
 
             groupEntry.getValue().getFields().entrySet().stream()
                     .sorted(Comparator.comparing(o -> o.getValue().getNumber()))
-                    .forEachOrdered(baseInputEntry -> sortedGroup.addField(baseInputEntry.getValue()));
+                    .forEachOrdered(baseInputEntry -> sortedSectionA.addField(baseInputEntry.getValue()));
 
-            sortedProjectReportTemplate.addGroup(sortedGroup);
+            sortedProjectReportTemplate.addSection(sortedSectionA);
         }
 
         return sortedProjectReportTemplate;

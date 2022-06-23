@@ -1,27 +1,22 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.group;
 
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.BaseInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.MultiInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SelectMultiInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SelectSingleInput;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.SingleInput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Project Report Group.
  */
-public class Group {
+public class Section {
 
     private final Logger methodeLogger =
-            LoggerFactory.getLogger(Group.class.getName() + "Methods");
+            LoggerFactory.getLogger(Section.class.getName() + "Methods");
     private final Logger logger =
-            LoggerFactory.getLogger(Group.class.getName());
+            LoggerFactory.getLogger(Section.class.getName());
 
 
     // Identifier
@@ -40,7 +35,7 @@ public class Group {
      * @param letter Letter of the Group
      * @param name   Name of the Group
      */
-    public Group(String letter, String name) {
+    public Section(String letter, String name) {
         methodeLogger.debug("call Group(letter: '{}', name: '{}')", letter, name);
 
         this.letter = letter;
@@ -82,7 +77,7 @@ public class Group {
      * @param groupTemplate Template witch the Input is validated against
      * @throws IllegalArgumentException text
      */
-    public void validateGroup(Group groupTemplate) throws IllegalArgumentException {
+    public void validateGroup(Section groupTemplate) throws IllegalArgumentException {
         if (!Objects.equals(letter, groupTemplate.getLetter())) {
             throw new IllegalArgumentException("TemplateGroup and Group dont match."
                     + "\n Gotten Letter" + groupTemplate.getLetter() + " but expected " + this.getLetter());
@@ -95,16 +90,6 @@ public class Group {
             if (!this.fields.containsKey(field.getNumber())) {
                 throw new IllegalArgumentException("TemplateGroup:Input and Group:Input dont match."
                         + "\n Gotten FieldNumber " + fieldNumber + " but does not exists");
-            }
-
-            if (fields.get(field.getNumber()) instanceof MultiInput) {
-                ((MultiInput) fields.get(field.getNumber())).validateInput(field);
-            } else if (fields.get(field.getNumber()) instanceof SelectMultiInput) {
-                ((SelectMultiInput) fields.get(field.getNumber())).validateInput(field);
-            } else if (fields.get(field.getNumber()) instanceof SelectSingleInput) {
-                ((SelectSingleInput) fields.get(field.getNumber())).validateInput(field);
-            } else if (fields.get(field.getNumber()) instanceof SingleInput) {
-                ((SingleInput) fields.get(field.getNumber())).validateInput(field);
             }
         });
     }

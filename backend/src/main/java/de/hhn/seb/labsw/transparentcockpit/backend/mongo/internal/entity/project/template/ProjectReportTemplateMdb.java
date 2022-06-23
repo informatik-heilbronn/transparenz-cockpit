@@ -1,5 +1,6 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template;
 
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.input.InputTemplate;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 
@@ -22,7 +23,10 @@ public class ProjectReportTemplateMdb {
     private String templateId;
 
     // Content
-    private Map<String, GroupTemplateMdb> groups = new HashMap<>();
+    private InputTemplate reportName;
+    private InputTemplate reportID;
+    private InputTemplate reportGroup;
+    private Map<String, SectionTemplateMdb> sections = new HashMap<>();
 
 
     // Morphia
@@ -35,10 +39,10 @@ public class ProjectReportTemplateMdb {
 
     public ProjectReportTemplateMdb(String projectReportTemplate,
                                     String templateId,
-                                    Map<String, GroupTemplateMdb> groups) {
+                                    Map<String, SectionTemplateMdb> sections) {
         this.projectReportTemplate = projectReportTemplate;
         this.templateId = templateId;
-        this.groups = groups;
+        this.sections = sections;
     }
 
 
@@ -54,15 +58,39 @@ public class ProjectReportTemplateMdb {
         this.templateId = templateId;
     }
 
-    public Map<String, GroupTemplateMdb> getGroups() {
-        return groups;
+    public Map<String, SectionTemplateMdb> getSections() {
+        return sections;
     }
 
-    public void addGroup(String groupLetter, GroupTemplateMdb groupMdb) {
-        this.groups.put(groupLetter, groupMdb);
+    public void addGroup(String groupLetter, SectionTemplateMdb groupMdb) {
+        this.sections.put(groupLetter, groupMdb);
     }
 
-    public void setGroups(Map<String, GroupTemplateMdb> groups) {
-        this.groups = groups;
+    public void setSections(Map<String, SectionTemplateMdb> sections) {
+        this.sections = sections;
+    }
+
+    public InputTemplate getReportName() {
+        return reportName;
+    }
+
+    public void setReportName(InputTemplate reportName) {
+        this.reportName = reportName;
+    }
+
+    public InputTemplate getReportID() {
+        return reportID;
+    }
+
+    public void setReportID(InputTemplate reportID) {
+        this.reportID = reportID;
+    }
+
+    public InputTemplate getReportGroup() {
+        return reportGroup;
+    }
+
+    public void setReportGroup(InputTemplate reportGroup) {
+        this.reportGroup = reportGroup;
     }
 }

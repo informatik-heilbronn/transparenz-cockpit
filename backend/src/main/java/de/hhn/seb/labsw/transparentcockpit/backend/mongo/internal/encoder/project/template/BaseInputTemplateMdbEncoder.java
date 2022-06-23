@@ -17,7 +17,7 @@ public class BaseInputTemplateMdbEncoder {
     public static BaseInputTemplateMdb encode(BaseInputTemplateMdb baseInputTemplateMdb) {
         BaseInputTemplateMdb encodedBaseInputTemplateMdb = new BaseInputTemplateMdb(
                 Base64Encoder.encode(baseInputTemplateMdb.getNumber()), Base64Encoder.encode(baseInputTemplateMdb.getName()),
-                baseInputTemplateMdb.getInputType(), baseInputTemplateMdb.getModifiers(),
+                baseInputTemplateMdb.getInputType(), baseInputTemplateMdb.getIsRequired(),
                 baseInputTemplateMdb.getType(), Collections.emptyList());
 
         List<Object> allowedValues = new ArrayList<>();
@@ -33,7 +33,7 @@ public class BaseInputTemplateMdbEncoder {
     public static BaseInputTemplateMdb decode(BaseInputTemplateMdb baseInputTemplateMdb) {
         BaseInputTemplateMdb decodedBaseInputTemplateMdb = new BaseInputTemplateMdb(
                 Base64Encoder.decode(baseInputTemplateMdb.getNumber()), Base64Encoder.decode(baseInputTemplateMdb.getName()),
-                baseInputTemplateMdb.getInputType(), baseInputTemplateMdb.getModifiers(),
+                baseInputTemplateMdb.getInputType(), baseInputTemplateMdb.getIsRequired(),
                 baseInputTemplateMdb.getType(), Collections.emptyList());
 
         List<Object> allowedValues = new ArrayList<>();
