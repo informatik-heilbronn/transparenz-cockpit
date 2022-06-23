@@ -1,7 +1,5 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.exceptions.validation;
 
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
-
 /**
  * Exception if there is an error with modifiers.
  */

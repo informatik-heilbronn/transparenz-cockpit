@@ -16,6 +16,11 @@ import java.util.UUID;
  */
 public class ProjectReportMbdMapper {
 
+    /**
+     * Maps a ProjectReport to a ProjectReportMdb object
+     * @param projectReport A ProjectReport to map
+     * @return ProjectReportMdb object that can be stored in the Mongo DB
+     */
     public static ProjectReportMdb toProjectReportMdb(ProjectReport projectReport) {
         ProjectReportMdb projectReportMdb = new ProjectReportMdb(projectReport.getProjectNumber(), projectReport.getName());
 
@@ -33,6 +38,11 @@ public class ProjectReportMbdMapper {
         return projectReportMdb;
     }
 
+    /**
+     * Maps a ProjectReportMdb to a ProjectReport object
+     * @param projectReportMdb A ProjectReportMdb to map
+     * @return ProjectReport object that is used in the backend
+     */
     public static ProjectReport toProjectReport(ProjectReportMdb projectReportMdb) {
         ProjectReport projectReport = new ProjectReport(UUID.fromString(projectReportMdb.getTemplateId()), projectReportMdb.getReportID(), projectReportMdb.getReportName(), projectReportMdb.getReportGroup());
 
@@ -45,6 +55,11 @@ public class ProjectReportMbdMapper {
         return projectReport;
     }
 
+    /**
+     * Sorts the section-map based on the letter
+     * @param projectReport A ProjectReport to be sorted
+     * @return A sorted ProjectReport that can be used in the backend
+     */
     public static ProjectReport sort(ProjectReport projectReport) {
         ProjectReport sortedProjectReport = new ProjectReport(projectReport.getTemplateId(), projectReport.getReportID(), projectReport.getReportName(), projectReport.getReportGroup());
 

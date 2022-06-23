@@ -31,7 +31,7 @@ public abstract class BaseInput {
      *
      * @param number    Number of the Input
      * @param name      Name of the Input
-     * @param isRequired Modifiers of the Input
+     * @param isRequired Is Input required
      * @param type      Type of the Input
      * @param inputType InputType
      */

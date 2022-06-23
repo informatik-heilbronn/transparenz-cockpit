@@ -15,8 +15,6 @@ public class Section {
 
     private final Logger methodeLogger =
             LoggerFactory.getLogger(Section.class.getName() + "Methods");
-    private final Logger logger =
-            LoggerFactory.getLogger(Section.class.getName());
 
 
     // Identifier

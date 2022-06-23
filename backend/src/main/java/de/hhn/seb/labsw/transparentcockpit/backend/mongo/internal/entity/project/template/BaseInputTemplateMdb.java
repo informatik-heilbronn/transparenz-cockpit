@@ -1,7 +1,6 @@
 package de.hhn.seb.labsw.transparentcockpit.backend.mongo.internal.entity.project.template;
 
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.DataType;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;

@@ -14,10 +14,15 @@ import java.util.Map;
  */
 public class SectionTemplateMdbMapper {
 
-    public static SectionTemplateMdb toSectionTemplateMdb(Section sectionA) {
-        SectionTemplateMdb groupMdb = new SectionTemplateMdb(sectionA.getLetter(), sectionA.getName());
+    /**
+     * Maps a Section to a SectionTemplateMdb object
+     * @param section A section to map
+     * @return the SectionTemplateMdb object that can be stored in the Mongo DB
+     */
+    public static SectionTemplateMdb toSectionTemplateMdb(Section section) {
+        SectionTemplateMdb groupMdb = new SectionTemplateMdb(section.getLetter(), section.getName());
 
-        for (Map.Entry<String, BaseInput> entry : sectionA.getFields().entrySet()) {
+        for (Map.Entry<String, BaseInput> entry : section.getFields().entrySet()) {
             String key = entry.getKey();
             BaseInput value = entry.getValue();
 
@@ -30,6 +35,11 @@ public class SectionTemplateMdbMapper {
         return groupMdb;
     }
 
+    /**
+     * Maps a SectionTemplateMdb to a Section object
+     * @param groupMdb A SectionTemplateMdb object to map
+     * @return the Section object that is used in the backend
+     */
     public static Section toSection(SectionTemplateMdb groupMdb) {
         Section reportSectionA = new Section(groupMdb.getLetter(), groupMdb.getName());
 

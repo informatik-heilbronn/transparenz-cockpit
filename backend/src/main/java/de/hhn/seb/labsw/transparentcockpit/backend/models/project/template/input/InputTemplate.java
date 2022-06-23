@@ -3,26 +3,18 @@ package de.hhn.seb.labsw.transparentcockpit.backend.models.project.template.inpu
 import de.hhn.seb.labsw.transparentcockpit.backend.exceptions.validation.ValueException;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.BaseInput;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.DataType;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.util.ValidationUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Project Report InputTemplate of Type SingleInputTemplate.
- * SingleInput:
- * - Single Input Value
+ * Project Report InputTemplate
  */
 public class InputTemplate extends BaseInput {
 
-    private List<Object> allowedValues = new ArrayList<>();
+    private List<Object> allowedValues;
 
     /**
      * Constructor.

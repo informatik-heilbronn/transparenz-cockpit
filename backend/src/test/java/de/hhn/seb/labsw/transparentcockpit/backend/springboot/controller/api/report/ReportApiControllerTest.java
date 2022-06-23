@@ -4,7 +4,6 @@ import de.hhn.seb.labsw.transparentcockpit.backend.buisnesslogic.ProjectReportSe
 import de.hhn.seb.labsw.transparentcockpit.backend.buisnesslogic.ProjectReportTemplateService;
 import de.hhn.seb.labsw.transparentcockpit.backend.exceptions.reporitory.NotFoundException;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.DataType;
-import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputType;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.ProjectReport;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.report.input.Input;

@@ -15,6 +15,11 @@ import java.util.Map;
  */
 public class ProjectReportHistoryMbdMapper {
 
+    /**
+     * Maps a ProjectReportHistory to a ProjectReportHistoryMdb object
+     * @param projectReportHistory A ProjectReportHistory to map
+     * @return the ProjectReportHistoryMdb object that can be stored in the Mongo DB
+     */
     public static ProjectReportHistoryMdb toProjectReportHistoryMdb(ProjectReportHistory projectReportHistory) {
         ProjectReportHistoryMdb projectReportHistoryMdb = new ProjectReportHistoryMdb(
                 projectReportHistory.getProjectNumber(),
@@ -30,6 +35,11 @@ public class ProjectReportHistoryMbdMapper {
         return projectReportHistoryMdb;
     }
 
+    /**
+     * Maps a ProjectReportHistoryMdb to a ProjectReportHistory object
+     * @param projectReportHistoryMdb A ProjectReportHistoryMdb object to map
+     * @return the ProjectReportHistory object that is used in the backend
+     */
     public static ProjectReportHistory toProjectReportHistory(ProjectReportHistoryMdb projectReportHistoryMdb) {
         ProjectReportHistory projectReportHistory = new ProjectReportHistory(projectReportHistoryMdb.getProjectNumber());
 

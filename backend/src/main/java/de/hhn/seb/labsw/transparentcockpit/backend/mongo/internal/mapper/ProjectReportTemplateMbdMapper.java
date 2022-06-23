@@ -15,6 +15,11 @@ import java.util.UUID;
  */
 public class ProjectReportTemplateMbdMapper {
 
+    /**
+     * Maps a ProjectReportTemplate to a ProjectReportTemplateMdb object
+     * @param projectReportTemplate A ProjectReportTemplate to map
+     * @return the ProjectReportTemplateMdb object that can be stored in the Mongo DB
+     */
     public static ProjectReportTemplateMdb toProjectReportTemplateMdb(ProjectReportTemplate projectReportTemplate) {
         ProjectReportTemplateMdb projectReportTemplateMdb = new ProjectReportTemplateMdb(
                 projectReportTemplate.getTemplateId().toString());
@@ -22,6 +27,7 @@ public class ProjectReportTemplateMbdMapper {
         projectReportTemplateMdb.setTemplateId(projectReportTemplate.getTemplateId().toString());
         projectReportTemplateMdb.setReportGroup(projectReportTemplate.getReportGroup());
         projectReportTemplateMdb.setReportID(projectReportTemplate.getReportID());
+        projectReportTemplateMdb.setReportName(projectReportTemplate.getReportName());
 
         for (Map.Entry<String, Section> entry : projectReportTemplate.getSections().entrySet()) {
             String key = entry.getKey();
@@ -32,6 +38,11 @@ public class ProjectReportTemplateMbdMapper {
         return projectReportTemplateMdb;
     }
 
+    /**
+     * Maps a ProjectReportTemplateMdb to a ProjectReportTemplate object
+     * @param projectReportTemplateMdb A ProjectReportTemplateMdb to map
+     * @return the ProjectReportTemplate object that is used in the backend
+     */
     public static ProjectReportTemplate toProjectReportTemplate(ProjectReportTemplateMdb projectReportTemplateMdb) {
         ProjectReportTemplate projectReportTemplate = new ProjectReportTemplate(
                 UUID.fromString(projectReportTemplateMdb.getTemplateId()), projectReportTemplateMdb.getReportID(), projectReportTemplateMdb.getReportName(), projectReportTemplateMdb.getReportGroup());
@@ -44,6 +55,11 @@ public class ProjectReportTemplateMbdMapper {
         return projectReportTemplate;
     }
 
+    /**
+     * Sorts the section-map based on the letter
+     * @param projectReportTemplate A ProjectReportTemplate to be sorted
+     * @return A sorted ProjectReportTemplate that can be used in the backend
+     */
     public static ProjectReportTemplate sort(ProjectReportTemplate projectReportTemplate) {
         ProjectReportTemplate sortedProjectReportTemplate = new ProjectReportTemplate(projectReportTemplate.getTemplateId());
 
