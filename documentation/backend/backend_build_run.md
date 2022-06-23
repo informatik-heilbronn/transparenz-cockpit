@@ -71,7 +71,7 @@ Note: If you have not created a user for the MongoDB database,
       you can create a new admin user with the following commands in Mongo shell:
 ```sh
    use admin
-   db.createUser({ user: "mongoadmin" , pwd: "mongoadmin", roles: ["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase"]})
+   db.createUser({ user: "<user>" , pwd: "<password>", roles: ["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase"]})
 ```
 
 After you have done all the preparations, open CMD, navigate to the project folder and run the following command:
