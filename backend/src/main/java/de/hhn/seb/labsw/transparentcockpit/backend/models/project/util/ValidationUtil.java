@@ -3,12 +3,9 @@ package de.hhn.seb.labsw.transparentcockpit.backend.models.project.util;
 import de.hhn.seb.labsw.transparentcockpit.backend.exceptions.validation.ModifierException;
 import de.hhn.seb.labsw.transparentcockpit.backend.exceptions.validation.ValueException;
 import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.BaseInput;
+import de.hhn.seb.labsw.transparentcockpit.backend.models.project.base.input.InputModifier;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Validation Util.
