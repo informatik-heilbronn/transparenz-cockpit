@@ -35,16 +35,10 @@ export default function SignIn ({ csrfToken }) {
         <form method='post' action='/api/auth/callback/credentials' className={styles.main}>
           <input name='csrfToken' type='hidden' defaultValue={csrfToken} />
           <div className={styles.labelDiv}>
-            <label className='labelusername'>
-              Benutzername:
-            </label>
-            <input name='username' type='text' className={styles.inputFeld} />
+            <input name='username' type='text' className={styles.inputFeld} placeholder="Benutzername" />
           </div>
           <div className={styles.labelDiv}>
-            <label>
-              Passwort:
-            </label>
-            <input name='password' type='password' className={styles.inputFeld} />
+            <input name='password' type='password' className={styles.inputFeld} placeholder="Passwort" />
           </div>
           <button className={styles.button} type='submit'>Anmelden</button>
         </form>
