@@ -53,12 +53,19 @@ import * as lodash from 'lodash';
 
 //  }
 
+
+/*
+'jsonBody' contains the data of the entire form template. Here this data gets sent back to
+the backend in form of a JSON-string. 'jsonBody' is directly comparable to ___ from ___,
+with the only difference that it now holds the updated information "typed" in by the user.
+*/
 export async function Post (jsonBody, id) {
+  console.log(JSON.stringify(jsonBody))
   const res = await fetch(process.env.REPORT_UPDATE_URL + '/' + id, {
     mode: 'cors',
     method: 'POST',
     cache: 'no-cache',
-    body: JSON.stringify(jsonBody),
+    body: JSON.stringify(jsonBody), // JSON string
     headers: {
       'Content-Type': 'application/json'
     }
@@ -105,6 +112,9 @@ export async function getDefaultTemp () { // load default template ID
  *
  * @param context
  * @returns {Promise<{props: {allData: any}}>}
+
+ This function is called at the beginning. It requests and receives a template from the backend,
+ which contains default data.
  */
 export async function getServerSideProps (context) {
   const id = await context.params.view
@@ -152,6 +162,14 @@ const onDelete = async (data) => {
  * @param allData
  * @returns {JSX.Element|null}
  * @constructor
+
+ This is the section that describes how the form is displayed to the user. 'allData' represents
+ the data object which contains all the form's data (this is the single fields and how they are
+ organized).
+
+ Within nested itertions (over the entries of 'allData') specific attributes are read and to
+ ultimately render the <SpecificComp>-HTML-element, which is ultimately the field the user can
+ interact with (edit, choose from a list of predefined values, auto-filled text,...).
  */
 function HomePage ({ allData, allDataTmp }) {
   const allDataProps = Object.getOwnPropertyNames(allData)
@@ -236,6 +254,14 @@ function HomePage ({ allData, allDataTmp }) {
      * @param value
      * @returns {*[]|*}
      * @constructor
+
+     This function is called from within 'HomePage()'. During the definition of each <SpecificComp>,
+     this function gets invoked and receives four parameters. These parameters come directly
+     from the form data object received from the backend, such as for instance the "type" attribute
+     of a single field. By using these values, this method decides what value (or number of values)
+     are to be effectively represented on a single field for the user to see, i.e. to select or edit.
+
+     An example is outlined below in more detail.
      */
   function ValueDecide (inputType, value, values, type) {
     const valArr = []
@@ -260,18 +286,19 @@ function HomePage ({ allData, allDataTmp }) {
           return valArr
         }
         break
-      case 'MULTI_INPUT':
-        if (typeof values !== 'undefined' && values.length > -1) {
-          values.map((data) => {
+      case 'MULTI_INPUT':  // field's input type
+        if (typeof values !== 'undefined' && values.length > -1) { // makes sure that 'values' exist by default in this field
+                                                                   // these should have been provided by the backend's default template already
+          values.map((data) => { // iterate over all entries in 'values' - an entry is referenced by 'data'
             valArr.push(
-              { label: data }
+              { label: data } // write the found entry into another array
             )
           })
-          return valArr
+          return valArr // finally return the array. It's values are going to be used by the calling object, to show them to the user
         }
         break
-      case 'SINGLE_INPUT':
-        if (type === 'DATE' && value) {
+      case 'SINGLE_INPUT': // field's input type
+        if (type === 'DATE' && value) {  // the input's data type
           const valueDate = new Date(Date.parse(value))
           if(isValidDate(valueDate)){
             return valueDate.toISOString
@@ -325,14 +352,18 @@ function HomePage ({ allData, allDataTmp }) {
     }
   }
 
-  //Ausfüllen des Formulars und abschicken an das Backend
+  /*
+  As the name suggests, 'fillUp' is responsible for filling up, this is, updating the given form
+  with the new data provided by the user. More precisely, this occurs by overwriting the default
+  values of the default template with the new ones.
+  */
   async function fillUp () {
-    let inputs, index, name, id, lastType, value
+    let inputs, index, name, id, lastType, value // declares field. Most notably: value will hold the new value to be set
     let arrTmp = []
     try {
       inputs = document.getElementsByTagName('input')
       console.log(inputs)
-      for (index = 0; index < inputs.length; ++index) {
+      for (index = 0; index < inputs.length; ++index) {  // iterate over all fields in the template
         try {
           if (inputs[index].name) {
             name = inputs[index].name.split(' ')[0]
@@ -347,7 +378,7 @@ function HomePage ({ allData, allDataTmp }) {
                 const day = dateObj.getUTCDate()
                 const year = dateObj.getUTCFullYear()
                 const newdate = day + '.' + month + '.' + year
-                value = newdate
+                value = newdate  // field's type has been identified and value is set accordingly
                 break
               default:
                 value = inputs[index].value
@@ -386,7 +417,7 @@ function HomePage ({ allData, allDataTmp }) {
               if (!value) {
                 delete allDataTmp.groups[name].fields[id].value
               } else {
-                allDataTmp.groups[name].fields[id].value = value
+                allDataTmp.groups[name].fields[id].value = value // overwrite default value with new value
               }
               delete allDataTmp.groups[name].fields[id].allowedValues
             }
@@ -420,6 +451,7 @@ function HomePage ({ allData, allDataTmp }) {
           cancelButtonText: 'Abbrechen'
         }).then((result) => {
           if (result.isConfirmed) {
+            // by clicking on "Speichern" (= save) onSubmit() is called, which in turn results in the call of Post()
             onSubmit(allDataTmp, allDataTmp.groups['A.'].fields['6.'].value).then(r => {
               console.log(r)
             })
@@ -431,6 +463,11 @@ function HomePage ({ allData, allDataTmp }) {
     }
   }
 
+/*
+Helper function for HomePage()
+This is called during the rendering of a field.
+If the field is a selection field, a list of allowed values (to be displayed and selected) is returned.
+*/
   function OptionDecide (data, grId, feId) {
     const optArr = []
     let allowedValuesMap
@@ -447,6 +484,11 @@ function HomePage ({ allData, allDataTmp }) {
     }
   }
 
+/*
+Helper function for HomePage()
+This is called during the rendering of a field.
+Decides whether the field is mandatory or not.
+*/
   function ReqDecide (data) {
     if (data.modifiers.includes('REQUIRED')) {
       return true
@@ -462,7 +504,11 @@ function HomePage ({ allData, allDataTmp }) {
       return false
     }
   }
-
+/*
+Helper function for HomePage()
+This is called during the rendering of a field.
+Defines the label for the HTML-component for the field.
+*/
   function LabDecide (data, bool, boolAuto) {
     if (bool && boolAuto) {
       return data + '*' + '(Autogeneriert)'
