@@ -1,10 +1,10 @@
-@startuml Transparent_new_backend_datastructure
+@startuml Transparent_new_frontend_datastructure
 
 skinparam linetype ortho
 skinparam nodesep 450
 skinparam ranksep 45
 
-Class ProjectReportTemplate{
+Class ProjectReport{
 - reportName: InputTemplate
 - reportID: InputTemplate
 - reportGroup: InputTemplate
@@ -21,11 +21,15 @@ abstract Class BaseInput{
 Class InputTemplate{
 allowedValues: List<Object>
 }
-ProjectReportTemplate "1" -- "1..*" InputTemplate
+Class Input{
+- values: List<Object>
+}
+ProjectReport "1" -- "1..*" InputTemplate
 
 BaseInput <|-- InputTemplate
+InputTemplate <|-- Input
 
-ProjectReportTemplate "1" -- "1..*" Section
+ProjectReport "1" -- "1..*" Section
 
 Section "1" -- "0..*" BaseInput
 @enduml
