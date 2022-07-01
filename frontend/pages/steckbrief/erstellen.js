@@ -164,7 +164,7 @@ function HomePage ({ allData }) {
                               return (
                                 <SpecificComp
                                   key={index}
-                                  label={LabDecide(dataDynam.number + '| ' + dataDynam.name, ReqDecide(dataDynam), DisDecide(dataDynam))}
+                                  label={LabDecide(decode_utf8(dataDynam.number + '| ' + dataDynam.name), ReqDecide(dataDynam), DisDecide(dataDynam))}
                                   options={OptionDecide(dataDynam)}
                                   type={dataType[dataDynam.type]}
                                   name={dataOut.letter + ' ' + dataDynam.number}
@@ -315,7 +315,7 @@ function HomePage ({ allData }) {
       allowedValuesMap = data.allowedValues
       try {
         allowedValuesMap.map(data => {
-          optArr.push({ value: data, label: data })
+          optArr.push({ value: data, label: decode_utf8(data) })
         })
       } catch (e) {
         console.log(e)

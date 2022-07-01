@@ -196,7 +196,7 @@ function HomePage ({ allData, allDataTmp }) {
   return (
     <div className={styles.div}>
       <div className={styles.divMid}>
-        <h1>{allData.projectName}</h1>
+        <h1>{decode_utf8(allData.projectName)}</h1>
         <h1 className={styles.h}>
           <div className={styles.circle}><FontAwesomeIcon
             icon={faSave} className={styles.icon}
@@ -223,7 +223,7 @@ function HomePage ({ allData, allDataTmp }) {
                               return (
                                 <SpecificComp
                                   key={index}
-                                  label={LabDecide(dataDynam.number + '| ' + dataDynam.name, ReqDecide(dataDynam), DisDecide(dataDynam))}
+                                  label={LabDecide(decode_utf8(dataDynam.number + '| ' + dataDynam.name), ReqDecide(dataDynam), DisDecide(dataDynam))}
                                   options={OptionDecide(dataDynam, dataOut.letter, dataDynam.number)}
                                         // value= {ValueDecide(dataDynam.inputType, dataDynam.value,dataDynam.values, dataDynam.type)}
                                   defaultValue={ValueDecide(dataDynam.inputType, dataDynam.value, dataDynam.values, dataDynam.type)}
@@ -269,6 +269,7 @@ function HomePage ({ allData, allDataTmp }) {
     switch (inputType) {
       case 'SELECT_MULTI_INPUT':
         if (typeof values !== 'undefined' && values.length > -1) {
+          data = decode_utf8(data)
           values.map((data) => {
             valArr.push(
               Object.create({ value: data, label: data })
@@ -280,6 +281,7 @@ function HomePage ({ allData, allDataTmp }) {
       case 'SELECT_SINGLE_INPUT':
         if (typeof value !== 'undefined' && value.length > -1) {
           value.map((data) => {
+            data = decode_utf8(data)
             valArr.push(
               Object.create({ value: data, label: data })
             )
@@ -291,6 +293,7 @@ function HomePage ({ allData, allDataTmp }) {
         if (typeof values !== 'undefined' && values.length > -1) { // makes sure that 'values' exist by default in this field
                                                                    // these should have been provided by the backend's default template already
           values.map((data) => { // iterate over all entries in 'values' - an entry is referenced by 'data'
+            data = decode_utf8(data)
             valArr.push(
               { label: data } // write the found entry into another array
             )
@@ -382,7 +385,7 @@ function HomePage ({ allData, allDataTmp }) {
                 value = newdate  // field's type has been identified and value is set accordingly
                 break
               default:
-                value = inputs[index].value
+                value = encode_utf8(inputs[index].value)
                 break
             }
             if (
@@ -476,7 +479,7 @@ If the field is a selection field, a list of allowed values (to be displayed and
       allowedValuesMap = allDataTemp.groups[grId].fields[feId].allowedValues
       try {
         allowedValuesMap.map(data => {
-          optArr.push({ value: data, label: data })
+          optArr.push({ value: decode_utf8(data), label: decode_utf8(data) })
         })
       } catch (e) {
         console.log(e)
